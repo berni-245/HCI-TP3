@@ -1,0 +1,28 @@
+package hci_tp3.smart_penguin.remote.model
+
+import com.google.gson.annotations.SerializedName
+import hci_tp3.smart_penguin.model.Action
+import hci_tp3.smart_penguin.model.Room
+
+class RemoteAction {
+    @SerializedName("device")
+    lateinit var device: RemoteDevice<*>
+
+    @SerializedName("actionName")
+    lateinit var actionName: String
+
+    @SerializedName("params")
+    lateinit var params: List<String>
+
+    @SerializedName("meta")
+    var meta: Any? = null
+
+    fun asModel(): Action {
+        return Action(
+            device.asModel(),
+            actionName,
+            params,
+            meta
+        )
+    }
+}

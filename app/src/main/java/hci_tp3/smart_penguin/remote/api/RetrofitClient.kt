@@ -35,4 +35,8 @@ object RetrofitClient {
     val deviceService : DeviceService by lazy {
         retrofit.create(DeviceService::class.java)
     }
+
+//    val routinesService : RoutineService by lazy {
+//        retrofit.create(RoutineService::class.java)
+//    }
 }
