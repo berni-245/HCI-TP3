@@ -18,7 +18,7 @@ class RoutineRemoteDataSource(
         }
     }
 
-    suspend fun executeRoutine(routineId: String): Boolean {
+    suspend fun executeRoutine(routineId: String): List<*> {
         return handleApiResponse {
             routineService.executeRoutine(routineId)
         }

@@ -30,6 +30,6 @@ class RoutineRepository (
         return remoteDataSource.getRoutine(routineId).asModel()
     }
 
-    suspend fun executeRoutine(routineId: String): Boolean {
+    suspend fun executeRoutine(routineId: String): List<*> {
         return remoteDataSource.executeRoutine(routineId)
     }}

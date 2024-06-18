@@ -22,5 +22,5 @@ interface RoutineService {
     suspend fun executeRoutine (
         @Path("routineId") routineId: String,
         @Body body: Any = {}
-    ): Response<RemoteResult<Boolean>>
+    ): Response<RemoteResult<List<*>>>
 }
