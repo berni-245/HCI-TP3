@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import hci_tp3.smart_penguin.ui.devices.DevicesScreen
 import hci_tp3.smart_penguin.ui.rooms.RoomsScreen
+import hci_tp3.smart_penguin.ui.routines.RoutinesScreen
 
 @Composable
 fun AppNavGraph(navController: NavHostController) {
@@ -18,6 +19,9 @@ fun AppNavGraph(navController: NavHostController) {
         }
         composable(AppDestinations.DEVICES.route) {
             DevicesScreen()
+        }
+        composable(AppDestinations.ROUTINES.route) {
+            RoutinesScreen()
         }
     }
 }

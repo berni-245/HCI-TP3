@@ -2,6 +2,7 @@
     <string name="app_name">SmartPenguin</string>
     <string name="Rooms">Rooms</string>
     <string name="Devices">Devices</string>
+    <string name="Routines">Routines</string>
     <string name="get_rooms">GET ROOMS</string>
     <string name="get_current_room">GET CURRENT ROOM</string>
     <string name="add_room">ADD ROOM</string>

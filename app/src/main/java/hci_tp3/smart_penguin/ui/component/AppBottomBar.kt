@@ -15,7 +15,8 @@ fun AppBottomBar(
 ) {
     val items = listOf(
         AppDestinations.ROOMS,
-        AppDestinations.DEVICES
+        AppDestinations.DEVICES,
+        AppDestinations.ROUTINES
     )
 
     NavigationBar {
