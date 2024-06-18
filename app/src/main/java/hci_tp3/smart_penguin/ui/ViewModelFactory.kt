@@ -11,18 +11,22 @@ import androidx.savedstate.SavedStateRegistryOwner
 import hci_tp3.smart_penguin.ApiApplication
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import hci_tp3.smart_penguin.repository.RoomRepository
+import hci_tp3.smart_penguin.repository.RoutineRepository
 import hci_tp3.smart_penguin.ui.devices.DevicesViewModel
 import hci_tp3.smart_penguin.ui.devices.LampViewModel
 import hci_tp3.smart_penguin.ui.rooms.RoomsViewModel
+import hci_tp3.smart_penguin.ui.routines.RoutinesViewModel
 
 @Composable
 fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
     val application = (LocalContext.current.applicationContext as ApiApplication)
     val roomRepository = application.roomRepository
     val deviceRepository = application.deviceRepository
+    val routineRepository = application.routineRepository
     return ViewModelFactory(
         roomRepository,
         deviceRepository,
+        routineRepository,
         LocalSavedStateRegistryOwner.current,
         defaultArgs
     )
@@ -31,6 +35,7 @@ fun getViewModelFactory(defaultArgs: Bundle? = null): ViewModelFactory {
 class ViewModelFactory (
     private val roomRepository: RoomRepository,
     private val deviceRepository: DeviceRepository,
+    private val routineRepository: RoutineRepository,
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -49,6 +54,9 @@ class ViewModelFactory (
 
             isAssignableFrom(LampViewModel::class.java) ->
                 LampViewModel(deviceRepository)
+
+            isAssignableFrom(RoutinesViewModel::class.java) ->
+                RoutinesViewModel(routineRepository)
 
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

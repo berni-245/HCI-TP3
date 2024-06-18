@@ -6,7 +6,7 @@ class Routine(
     var id: String? = null,
     var name: String,
     var actions: List<Action>,
-    var meta: Any? = null
+    var meta: Any? = null // TODO: Add a metadata for description of the routine
 ) {
     fun asRemoteModel() : RemoteRoutine {
         val remoteModel = RemoteRoutine()
