@@ -16,6 +16,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.Status
 import hci_tp3.smart_penguin.ui.component.ActionButton
+import hci_tp3.smart_penguin.ui.devices.lamp.LampViewModel
+import hci_tp3.smart_penguin.ui.devices.lamp.canExecuteAction
 import hci_tp3.smart_penguin.ui.getViewModelFactory
 
 @Composable

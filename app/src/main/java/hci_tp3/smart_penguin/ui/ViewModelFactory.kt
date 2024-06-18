@@ -13,7 +13,7 @@ import hci_tp3.smart_penguin.repository.DeviceRepository
 import hci_tp3.smart_penguin.repository.RoomRepository
 import hci_tp3.smart_penguin.repository.RoutineRepository
 import hci_tp3.smart_penguin.ui.devices.DevicesViewModel
-import hci_tp3.smart_penguin.ui.devices.LampViewModel
+import hci_tp3.smart_penguin.ui.devices.lamp.LampViewModel
 import hci_tp3.smart_penguin.ui.rooms.RoomsViewModel
 import hci_tp3.smart_penguin.ui.routines.RoutinesViewModel
 

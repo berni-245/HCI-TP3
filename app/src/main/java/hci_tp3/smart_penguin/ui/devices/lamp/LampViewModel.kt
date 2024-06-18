@@ -1,4 +1,4 @@
-package hci_tp3.smart_penguin.ui.devices
+package hci_tp3.smart_penguin.ui.devices.lamp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
