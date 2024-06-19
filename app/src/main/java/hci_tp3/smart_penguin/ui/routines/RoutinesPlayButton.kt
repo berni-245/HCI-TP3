@@ -37,7 +37,7 @@ fun RoutinePlayButton(
     }
 }
 
-@Preview(showBackground = true,)
+@Preview(showBackground = true)
 @Composable
 fun RoutinePlayButtonPreview(){
     RoutinePlayButton {
