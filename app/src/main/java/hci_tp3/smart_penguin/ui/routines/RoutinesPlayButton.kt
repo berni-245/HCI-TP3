@@ -37,7 +37,7 @@ fun RoutinePlayButton(
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel")
+@Preview(showBackground = true,)
 @Composable
 fun RoutinePlayButtonPreview(){
     RoutinePlayButton {

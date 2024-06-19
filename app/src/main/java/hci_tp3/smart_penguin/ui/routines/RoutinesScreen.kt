@@ -1,5 +1,6 @@
 package hci_tp3.smart_penguin.ui.routines
 
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -15,4 +16,17 @@ fun RoutinesScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     Text("Hello Routines")
+}
+
+@Preview(showSystemUi = true, showBackground = true,
+    device = "id:pixel_3"
+)
+@Composable
+fun RoutinesScreenPreviewMobile(){
+    RoutinesScreen()
+}
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_tablet")
+@Composable
+fun RoutinesScreenPreviewTablet(){
+    RoutinesScreen()
 }
