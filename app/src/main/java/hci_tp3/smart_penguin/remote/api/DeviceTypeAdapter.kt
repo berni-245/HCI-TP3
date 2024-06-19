@@ -2,15 +2,15 @@ package hci_tp3.smart_penguin.remote.api
 
 import hci_tp3.smart_penguin.remote.model.RemoteDevice
 import hci_tp3.smart_penguin.remote.model.RemoteDeviceType
-import hci_tp3.smart_penguin.remote.model.RemoteLamp
 import com.google.gson.Gson
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
+import hci_tp3.smart_penguin.remote.model.RemoteLamp
 import hci_tp3.smart_penguin.remote.model.RemoteAc
-import hci_tp3.smart_penguin.remote.model.RemoteBlinds
+import hci_tp3.smart_penguin.remote.model.RemoteBlind
 import hci_tp3.smart_penguin.remote.model.RemoteVacuum
 import java.lang.reflect.Type
 
@@ -36,7 +36,7 @@ class DeviceTypeAdapter : JsonDeserializer<RemoteDevice<*>?> {
                 gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteVacuum?>() {}.type)
             }
             RemoteDeviceType.BLINDS_DEVICE_TYPE_ID -> {
-                gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteBlinds?>() {}.type)
+                gson.fromJson(jsonDeviceObject, object : TypeToken<RemoteBlind?>() {}.type)
             }
             else -> null
         }
