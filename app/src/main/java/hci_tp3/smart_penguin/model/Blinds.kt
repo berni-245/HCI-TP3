@@ -10,9 +10,6 @@ class Blinds (
     val level: Int,
     val currentLevel: Int
 ) : Device(id, name, DeviceType.BLINDS){
-    override fun asRemoteModel(): RemoteDevice<*> {
-        TODO("Not yet implemented")
-    }
 
     companion object {
         // TODO: Agregar nombres de acciones

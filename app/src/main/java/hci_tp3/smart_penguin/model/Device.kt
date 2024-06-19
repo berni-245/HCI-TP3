@@ -7,5 +7,4 @@ abstract class Device(
     val name: String,
     val type: DeviceType
 ) {
-    abstract fun asRemoteModel(): RemoteDevice<*>
 }

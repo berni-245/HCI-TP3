@@ -10,9 +10,6 @@ class Vacuum (
     val mode: String,
     val batteryLevel: Int
 ) : Device(id, name, DeviceType.VACUUM){
-    override fun asRemoteModel(): RemoteDevice<*> {
-        TODO("Not yet implemented")
-    }
 
     companion object {
         // TODO: Agregar nombres de acciones

@@ -26,24 +26,6 @@ class DeviceRemoteDataSource(
         }
     }
 
-    suspend fun addDevice(device: RemoteDevice<*>): RemoteDevice<*> {
-        return handleApiResponse {
-            deviceService.addDevice(device)
-        }
-    }
-
-    suspend fun modifyDevice(device: RemoteDevice<*>): Boolean {
-        return handleApiResponse {
-            deviceService.modifyDevice(device.id!!, device)
-        }
-    }
-
-    suspend fun deleteDevice(deviceId: String): Boolean {
-        return handleApiResponse {
-            deviceService.deleteDevice(deviceId)
-        }
-    }
-
     suspend fun executeDeviceAction(
         deviceId: String,
         action: String,

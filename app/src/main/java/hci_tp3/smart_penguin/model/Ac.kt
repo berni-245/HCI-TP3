@@ -17,23 +17,6 @@ class Ac (
     val fanSpeed: String
 ) : Device(id, name, DeviceType.AC){
 
-    override fun asRemoteModel(): RemoteDevice<RemoteAcState> {
-        val state = RemoteAcState()
-        state.status = Status.asRemoteModel(status)
-        state.temperature = temperature
-        state.mode = mode
-        state.verticalSwing = verticalSwing
-        state.horizontalSwing = horizontalSwing
-        state.fanSpeed = fanSpeed
-
-        val model = RemoteAc()
-        model.id = id
-        model.name = name
-        model.room = room?.asRemoteModel()
-        model.setState(state)
-        return model
-    }
-
     companion object {
         // TODO: Agregar nombres de acciones
     }

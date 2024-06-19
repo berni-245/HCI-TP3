@@ -6,7 +6,7 @@ class RemoteAcState {
     lateinit var status: String
 
     @SerializedName("temperature")
-    var temperature: Int = 18
+    var temperature: Int = 0
 
     @SerializedName("mode")
     lateinit var mode: String

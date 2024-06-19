@@ -19,18 +19,6 @@ class DeviceRepository(
         return remoteDataSource.getDevice(deviceId).asModel()
     }
 
-    suspend fun addDevice(device: Device): Device {
-        return remoteDataSource.addDevice(device.asRemoteModel()).asModel()
-    }
-
-    suspend fun modifyDevice(device: Device): Boolean {
-        return remoteDataSource.modifyDevice(device.asRemoteModel())
-    }
-
-    suspend fun deleteDevice(deviceId: String): Boolean {
-        return remoteDataSource.deleteDevice(deviceId)
-    }
-
     suspend fun executeDeviceAction(
         deviceId: String,
         action: String,
