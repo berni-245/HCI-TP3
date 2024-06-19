@@ -1,5 +1,6 @@
 package hci_tp3.smart_penguin.ui.devices.lamp
 
+import androidx.compose.ui.graphics.Color
 import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.model.Lamp
 
