@@ -1,7 +1,6 @@
 package hci_tp3.smart_penguin.model
 
 import LocaleEnum
-import hci_tp3.smart_penguin.remote.model.RemoteStatus
 import androidx.annotation.StringRes
 import hci_tp3.smart_penguin.R
 

@@ -2,7 +2,6 @@ package hci_tp3.smart_penguin.remote.model
 
 import com.google.gson.annotations.SerializedName
 import hci_tp3.smart_penguin.model.Action
-import hci_tp3.smart_penguin.model.Room
 
 class RemoteAction {
     @SerializedName("device")
