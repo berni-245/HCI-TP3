@@ -51,7 +51,7 @@ fun RoomsScreen(
                 val random2 = Random.nextInt(0, 100)
                 val color = String.format("#%06x", generateRandomColor())
                 val room = Room(name = "Room $random1", size = "${random2}m2", color = color)
-                viewModel.addRoom(room)
+//                viewModel.addRoom(room)
             })
         ActionButton(
             text = R.string.modify_room,
@@ -65,14 +65,14 @@ fun RoomsScreen(
                     size = "${random2}m2",
                     color = currentRoom.color
                 )
-                viewModel.modifyRoom(room)
+//                viewModel.modifyRoom(room)
             })
         ActionButton(
             text = R.string.delete_room,
             enabled = uiState.canDelete,
             onClick = {
                 val currentSport = uiState.currentRoom!!
-                viewModel.deleteRoom(currentSport.id!!)
+//                viewModel.deleteRoom(currentSport.id!!)
             })
         Column(
             modifier = Modifier.fillMaxSize()

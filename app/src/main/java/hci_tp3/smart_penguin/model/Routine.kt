@@ -8,12 +8,4 @@ class Routine(
     var actions: List<Action>,
     var meta: Any? = null // TODO: Add a metadata for description of the routine
 ) {
-    fun asRemoteModel() : RemoteRoutine {
-        val remoteModel = RemoteRoutine()
-        remoteModel.id = id
-        remoteModel.name = name
-        remoteModel.actions = actions.map { it.asRemoteModel() }
-        remoteModel.meta = meta
-        return remoteModel
-    }
 }

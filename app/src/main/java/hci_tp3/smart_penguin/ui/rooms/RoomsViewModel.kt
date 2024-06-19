@@ -35,27 +35,6 @@ class RoomsViewModel(
         )
     }
 
-    fun addRoom(room: Room) {
-        runOnViewModelScope(
-            { repository.addRoom(room) },
-            { state, response -> state.copy(currentRoom = response) }
-        ).invokeOnCompletion { getRooms() }
-    }
-
-    fun modifyRoom(room: Room) {
-        runOnViewModelScope(
-            { repository.modifyRoom(room) },
-            { state, _ -> state.copy(currentRoom = room) }
-        ).invokeOnCompletion { getRooms() }
-    }
-
-    fun deleteRoom(roomId: String) = viewModelScope.launch {
-        runOnViewModelScope(
-            { repository.deleteRoom(roomId) },
-            { state, _ -> state.copy(currentRoom = null) }
-        ).invokeOnCompletion { getRooms() }
-    }
-
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
         updateState: (RoomsUiState, R) -> RoomsUiState

@@ -8,12 +8,4 @@ class Action (
     var params : List<String>,
     var meta : Any? = null
 ){
-    fun asRemoteModel() : RemoteAction {
-        val remoteModel = RemoteAction()
-        remoteModel.device = device.asRemoteModel()
-        remoteModel.actionName = actionName
-        remoteModel.params = params
-        remoteModel.meta = meta
-        return remoteModel
-    }
 }

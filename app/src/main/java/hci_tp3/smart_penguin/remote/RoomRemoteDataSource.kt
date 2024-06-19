@@ -18,22 +18,4 @@ class RoomRemoteDataSource(
             roomService.getRoom(roomId)
         }
     }
-
-    suspend fun addRoom(room: RemoteRoom): RemoteRoom {
-        return handleApiResponse {
-            roomService.addRoom(room)
-        }
-    }
-
-    suspend fun modifyRoom(room: RemoteRoom): Boolean {
-        return handleApiResponse {
-            roomService.modifyRoom(room.id!!, room)
-        }
-    }
-
-    suspend fun deleteRoom(roomId: String): Boolean {
-        return handleApiResponse {
-            roomService.deleteRoom(roomId)
-        }
-    }
 }

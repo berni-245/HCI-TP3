@@ -10,16 +10,4 @@ class Room(
     var color: String
 ) {
 
-    fun asRemoteModel(): RemoteRoom {
-        val meta = RemoteRoomMeta()
-        meta.size = size
-        meta.color = color
-
-        val model = RemoteRoom()
-        model.id = id
-        model.name = name
-        model.meta = meta
-
-        return model
-    }
 }

@@ -29,22 +29,4 @@ class RoomRepository(
     suspend fun getRoom(roomId: String): Room {
         return remoteDataSource.getRoom(roomId).asModel()
     }
-
-    suspend fun addRoom(room: Room): Room {
-        val newRoom = remoteDataSource.addRoom(room.asRemoteModel()).asModel()
-        updateCache(emptyList())
-        return newRoom
-    }
-
-    suspend fun modifyRoom(room: Room): Boolean {
-        val result = remoteDataSource.modifyRoom(room.asRemoteModel())
-        updateCache(emptyList())
-        return result
-    }
-
-    suspend fun deleteRoom(roomId: String): Boolean {
-        val result = remoteDataSource.deleteRoom(roomId)
-        updateCache(emptyList())
-        return result
-    }
 }
