@@ -11,7 +11,7 @@ class Ac (
     val room: Room?,
     val status: Status,
     val temperature: Int,
-    val mode: String,
+    val mode: AcMode,
     val verticalSwing: String,
     val horizontalSwing: String,
     val fanSpeed: String

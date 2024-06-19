@@ -16,6 +16,25 @@
     <string name="total_devices">Total Devices: %1$s</string>
     <string name="device_status">Status: %1$s</string>
     <string name="unknown">UNKNOWN</string>
+    <plurals name="lamp">
+        <item quantity="one">Lamps</item>
+        <item quantity="other">Lamp</item>
+    </plurals>
+    <plurals name="blind">
+        <item quantity="one">Blind</item>
+        <item quantity="other">Blinds</item>
+    </plurals>
+    <plurals name="ac">
+        <item quantity="one">Air Conditioner</item>
+        <item quantity="other">Air Conditioners</item>
+    </plurals>
+    <plurals name="vacuum">
+        <item quantity="one">Vacuum</item>
+        <item quantity="other">Vacuums</item>
+    </plurals>
     <string name="status_on">ON</string>
     <string name="status_off">OFF</string>
+    <string name="ac_mode_cool">Cool</string>
+    <string name="ac_mode_heat">Heat</string>
+    <string name="ac_mode_fan">Fan</string>
 </resources>

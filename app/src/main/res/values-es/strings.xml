@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">SmartPenguin</string>
+    <string name="Rooms">Habitaciones</string>
+    <string name="Devices">Dispositivos</string>
+    <string name="Routines">Rutinas</string>
+    <string name="get_rooms">GET ROOMS</string>
+    <string name="get_current_room">GET CURRENT ROOM</string>
+    <string name="add_room">ADD ROOM</string>
+    <string name="modify_room">MODIFY ROOM</string>
+    <string name="delete_room">DELETE ROOM</string>
+    <string name="current_room">Current room: %1$s</string>
+    <string name="total_rooms">Total Rooms: %1$s</string>
+    <string name="execute_turn_on">Encender</string>
+    <string name="execute_turn_off">Apagar</string>
+    <string name="current_device">Current device: %1$s</string>
+    <string name="total_devices">Total Devices: %1$s</string>
+    <string name="device_status">Status: %1$s</string>
+    <string name="unknown">UNKNOWN</string>
+    <plurals name="lamp">
+        <item quantity="one">Lámpara</item>
+        <item quantity="other">Lámparas</item>
+    </plurals>
+    <plurals name="blind">
+        <item quantity="one">Persiana</item>
+        <item quantity="other">Persianas</item>
+    </plurals>
+    <plurals name="ac">
+        <item quantity="one">Aire Acondicionado</item>
+        <item quantity="other">Aires Acondicionados</item>
+    </plurals>
+    <plurals name="vacuum">
+        <item quantity="one">Aspiradora</item>
+        <item quantity="other">Aspiradoras</item>
+    </plurals>
+    <string name="status_on">Encendido</string>
+    <string name="status_off">Apagado</string>
+    <string name="ac_mode_cool">Frío</string>
+    <string name="ac_mode_heat">Caliente</string>
+    <string name="ac_mode_fan">Ventilador</string>
+</resources>
