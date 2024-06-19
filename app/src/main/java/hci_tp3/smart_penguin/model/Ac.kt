@@ -1,5 +1,6 @@
 package hci_tp3.smart_penguin.model
 
+import AcMode
 import hci_tp3.smart_penguin.remote.model.RemoteAc
 import hci_tp3.smart_penguin.remote.model.RemoteAcState
 import hci_tp3.smart_penguin.remote.model.RemoteDevice

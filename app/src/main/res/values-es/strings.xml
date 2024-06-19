@@ -16,22 +16,10 @@
     <string name="total_devices">Total Devices: %1$s</string>
     <string name="device_status">Status: %1$s</string>
     <string name="unknown">UNKNOWN</string>
-    <plurals name="lamp">
-        <item quantity="one">Lámpara</item>
-        <item quantity="other">Lámparas</item>
-    </plurals>
-    <plurals name="blind">
-        <item quantity="one">Persiana</item>
-        <item quantity="other">Persianas</item>
-    </plurals>
-    <plurals name="ac">
-        <item quantity="one">Aire Acondicionado</item>
-        <item quantity="other">Aires Acondicionados</item>
-    </plurals>
-    <plurals name="vacuum">
-        <item quantity="one">Aspiradora</item>
-        <item quantity="other">Aspiradoras</item>
-    </plurals>
+    <string name="lamps">Lámparas</string>
+    <string name="blinds">Persianas</string>
+    <string name="acs">Aires acondicionados</string>
+    <string name="vacuums">Aspiradoras</string>
     <string name="status_on">Encendido</string>
     <string name="status_off">Apagado</string>
     <string name="ac_mode_cool">Frío</string>
