@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -42,4 +44,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true, device = "id:pixel")
+@Composable
+fun MainPreview(){
+    MainActivity()
 }
