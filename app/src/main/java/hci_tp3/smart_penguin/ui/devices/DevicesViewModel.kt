@@ -3,8 +3,12 @@ package hci_tp3.smart_penguin.ui.devices
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
+import hci_tp3.smart_penguin.model.Ac
+import hci_tp3.smart_penguin.model.Blind
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import hci_tp3.smart_penguin.model.Error
+import hci_tp3.smart_penguin.model.Lamp
+import hci_tp3.smart_penguin.model.Vacuum
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,8 +26,15 @@ class DevicesViewModel(
 
     init {
         collectOnViewModelScope(
-            repository.devices
-        ) { state, response -> state.copy(devices = response) }
+            repository.devices,
+        ) { state, response ->
+            state.copy(
+                lamps = response.filterIsInstance<Lamp>(),
+                acs = response.filterIsInstance<Ac>(),
+                blinds = response.filterIsInstance<Blind>(),
+                vacuums = response.filterIsInstance<Vacuum>()
+            )
+        }
     }
 
     private fun <T> collectOnViewModelScope(
