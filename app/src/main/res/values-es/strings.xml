@@ -34,4 +34,18 @@
     <string name="vacuum_status_active">Activo</string>
     <string name="vacuum_mode_vacuum">Aspirar</string>
     <string name="vacuum_mode_mop">Trapear</string>
+    <string name="set_brightness_lamp_action">Establecer intensidad</string>
+    <string name="set_color_lamp_action">Establecer color</string>
+    <string name="set_temp_ac_action">Establecer temperatura a</string>
+    <string name="set_mode_ac_vacuum_action">Establecer modo</string>
+    <string name="set_vert_swing_ac_action">Establecer desplazamiento aspas vertical a</string>
+    <string name="set_horz_swing_ac">Establecer desplazamiento aspas horizontal a</string>
+    <string name="set_fan_speed_ac_action">Establecer velocidad a</string>
+    <string name="open_blinds_action">Abrir</string>
+    <string name="close_blind_action">Cerrar</string>
+    <string name="set_level_blind_action">Establecer posicíon</string>
+    <string name="start_vacuum_action">Iniciar</string>
+    <string name="pause_vacuum_action">Pausar</string>
+    <string name="set_dock_room_vacuum_action">Cambiar Ubicación Base Carga</string>
+    <string name="dock_vacuum_action">Regresar a base carga</string>
 </resources>

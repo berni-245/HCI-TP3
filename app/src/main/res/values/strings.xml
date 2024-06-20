@@ -34,4 +34,18 @@
     <string name="vacuum_status_active">Active</string>
     <string name="vacuum_mode_vacuum">Vacuum</string>
     <string name="vacuum_mode_mop">Mop</string>
+    <string name="set_brightness_lamp_action">Set brightness</string>
+    <string name="set_color_lamp_action">Set color</string>
+    <string name="set_temp_ac_action">Set temperature to</string>
+    <string name="set_mode_ac_vacuum_action">Set mode</string>
+    <string name="set_vert_swing_ac_action">Set vertical swing</string>
+    <string name="set_horz_swing_ac">Set horizontal swing</string>
+    <string name="set_fan_speed_ac_action">Set fan speed to</string>
+    <string name="open_blinds_action">Open</string>
+    <string name="close_blind_action">Close</string>
+    <string name="set_level_blind_action">Set level to</string>
+    <string name="start_vacuum_action">Start</string>
+    <string name="pause_vacuum_action">Pause</string>
+    <string name="set_dock_room_vacuum_action">Set dock room to</string>
+    <string name="dock_vacuum_action">Dock</string>
 </resources>
