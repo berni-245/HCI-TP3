@@ -7,6 +7,7 @@ import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.model.state.VacuumMode
 import hci_tp3.smart_penguin.repository.DeviceRepository
+import hci_tp3.smart_penguin.repository.RoomRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class VacuumViewModel (
-    private val repository: DeviceRepository
+    private val repository: DeviceRepository, private val roomsRepository: RoomRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(VacuumUiState())
@@ -43,6 +44,11 @@ class VacuumViewModel (
     fun setLocation(roomId: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.SET_LOCATION_ACTION, arrayOf(roomId)) },
         { state, _ -> state }
+    )
+
+    fun getRooms() = runOnViewModelScope(
+        { roomsRepository.getRooms(true) },
+        { state, response -> state.copy(rooms = response) }
     )
 
     private fun <R> runOnViewModelScope(

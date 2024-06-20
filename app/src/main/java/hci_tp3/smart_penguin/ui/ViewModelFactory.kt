@@ -65,7 +65,7 @@ class ViewModelFactory (
                 AcViewModel(deviceRepository)
 
             isAssignableFrom(VacuumViewModel::class.java) ->
-                VacuumViewModel(deviceRepository)
+                VacuumViewModel(deviceRepository, roomRepository)
 
             isAssignableFrom(RoutinesViewModel::class.java) ->
                 RoutinesViewModel(routineRepository)
