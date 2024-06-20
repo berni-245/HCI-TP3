@@ -84,13 +84,6 @@ fun DevicesScreen(
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 fontSize = 18.sp
             )
-            Text(
-                text = stringResource(R.string.total_devices, uiState.devices.size),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                fontSize = 18.sp
-            )
         }
     }
 }
