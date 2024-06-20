@@ -10,8 +10,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -41,17 +39,6 @@ class LampViewModel(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_COLOR_ACTION, arrayOf(color)) },
         { state, _ -> state }
     )
-
-
-    private fun <T> collectOnViewModelScope(
-        flow: Flow<T>,
-        updateState: (LampUiState, T) -> LampUiState
-    ) = viewModelScope.launch {
-        flow
-            .distinctUntilChanged()
-            .catch { e -> _uiState.update { it.copy(error = handleError(e)) } }
-            .collect { response -> _uiState.update { updateState(it, response) } }
-    }
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,

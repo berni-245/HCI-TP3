@@ -1,6 +1,7 @@
 package hci_tp3.smart_penguin.ui.devices.ac
 
 import hci_tp3.smart_penguin.model.Ac
+import hci_tp3.smart_penguin.model.Error
 
 data class AcUiState(
     val loading: Boolean = false,

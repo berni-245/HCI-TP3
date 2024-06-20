@@ -10,7 +10,9 @@ class Blind (
 ) : Device(id, name, DeviceType.BLIND){
 
     companion object {
-        // TODO: Agregar nombres de acciones
+        const val OPEN_ACTION = "open"
+        const val CLOSE_ACTION = "close"
+        const val SET_LEVEL_ACTION = "setLevel"
     }
 }
 

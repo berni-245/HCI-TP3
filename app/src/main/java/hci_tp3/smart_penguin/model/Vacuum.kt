@@ -10,6 +10,10 @@ class Vacuum (
 ) : Device(id, name, DeviceType.VACUUM){
 
     companion object {
-        // TODO: Agregar nombres de acciones
+        const val START_ACTION = "start"
+        const val PAUSE_ACTION = "pause"
+        const val DOCK_ACTION = "dock"
+        const val SET_MODE_ACTION = "setMode"
+        const val SET_LOCATION_ACTION = "setLocation"
     }
 }
