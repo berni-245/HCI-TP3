@@ -4,8 +4,8 @@ class Vacuum (
     id: String?,
     name: String,
     val room: Room?,
-    val status: String,
-    val mode: String,
+    val status: VacuumStatus,
+    val mode: VacuumMode,
     val batteryLevel: Int
 ) : Device(id, name, DeviceType.VACUUM){
 

@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import androidx.annotation.DrawableRes
 import hci_tp3.smart_penguin.R
 
-enum class DeviceType(@StringRes override val resourceId: Int, @DrawableRes val icon: Int?) : LocaleEnum {
+enum class DeviceType(@StringRes val resourceId: Int, @DrawableRes val icon: Int?) {
     LAMP(R.string.lamps, R.drawable.ic_lamp),
     BLIND(R.string.blinds, R.drawable.ic_ac),
     AC(R.string.acs, R.drawable.ic_ac),

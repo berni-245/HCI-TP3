@@ -4,7 +4,7 @@ class Blind (
     id: String?,
     name: String,
     val room: Room?,
-    val status: String,
+    val status: BlindStatus,
     val level: Int,
     val currentLevel: Int
 ) : Device(id, name, DeviceType.BLIND){

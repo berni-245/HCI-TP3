@@ -2,6 +2,7 @@ package hci_tp3.smart_penguin.remote.model
 
 import AcMode
 import hci_tp3.smart_penguin.model.Ac
+import hci_tp3.smart_penguin.model.Status
 
 class RemoteAc : RemoteDevice<RemoteAcState>() {
 
@@ -10,9 +11,9 @@ class RemoteAc : RemoteDevice<RemoteAcState>() {
             id = id,
             name = name,
             room = room?.asModel(),
-            status = RemoteStatus.asModel(state.status),
+            status = Status.valueOf(state.status.uppercase()),
             temperature = state.temperature,
-            mode = AcMode.FAN,
+            mode = AcMode.valueOf(state.mode.uppercase()),
             verticalSwing = state.verticalSwing,
             horizontalSwing = state.horizontalSwing,
             fanSpeed = state.fanSpeed

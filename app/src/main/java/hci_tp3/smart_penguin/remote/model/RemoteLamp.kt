@@ -1,6 +1,7 @@
 package hci_tp3.smart_penguin.remote.model
 
 import hci_tp3.smart_penguin.model.Lamp
+import hci_tp3.smart_penguin.model.Status
 
 class RemoteLamp : RemoteDevice<RemoteLampState>() {
 
@@ -9,7 +10,7 @@ class RemoteLamp : RemoteDevice<RemoteLampState>() {
             id = id,
             name = name,
             room = room?.asModel(),
-            status = RemoteStatus.asModel(state.status),
+            status = Status.valueOf(state.status.uppercase()),
             color = state.color,
             brightness = state.brightness
         )

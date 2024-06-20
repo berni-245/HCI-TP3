@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.model.Vacuum
+import hci_tp3.smart_penguin.model.VacuumMode
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,8 +35,8 @@ class VacuumViewModel (
         { state, _ -> state }
     )
 
-    fun setMode(mode: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.SET_MODE_ACTION, arrayOf(mode)) },
+    fun setMode(mode: VacuumMode) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.SET_MODE_ACTION, arrayOf(mode.apiString)) },
         { state, _ -> state }
     )
 

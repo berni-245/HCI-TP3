@@ -1,5 +1,6 @@
 package hci_tp3.smart_penguin.ui.devices.ac
 
+import AcMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
@@ -36,8 +37,8 @@ class AcViewModel (
         { state, _ -> state }
     )
 
-    fun setMode(mode: String) = runOnViewModelScope(
-        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_MODE_ACTION, arrayOf(mode)) },
+    fun setMode(mode: AcMode) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_MODE_ACTION, arrayOf(mode.apiString)) },
         { state, _ -> state }
     )
 

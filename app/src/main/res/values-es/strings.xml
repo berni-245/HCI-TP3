@@ -25,4 +25,13 @@
     <string name="ac_mode_cool">Frío</string>
     <string name="ac_mode_heat">Caliente</string>
     <string name="ac_mode_fan">Ventilador</string>
+    <string name="blind_status_opening">Abriendo</string>
+    <string name="blind_status_opened">Abierto</string>
+    <string name="blind_status_closing">Cerrando</string>
+    <string name="blind_status_closed">Cerrado</string>
+    <string name="vacuum_status_docked">En base</string>
+    <string name="vacuum_status_inactive">Inactivo</string>
+    <string name="vacuum_status_active">Activo</string>
+    <string name="vacuum_mode_vacuum">Aspirar</string>
+    <string name="vacuum_mode_mop">Trapear</string>
 </resources>
