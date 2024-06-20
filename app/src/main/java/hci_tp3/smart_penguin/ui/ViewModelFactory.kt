@@ -13,7 +13,10 @@ import hci_tp3.smart_penguin.repository.DeviceRepository
 import hci_tp3.smart_penguin.repository.RoomRepository
 import hci_tp3.smart_penguin.repository.RoutineRepository
 import hci_tp3.smart_penguin.ui.devices.DevicesViewModel
+import hci_tp3.smart_penguin.ui.devices.ac.AcViewModel
+import hci_tp3.smart_penguin.ui.devices.blind.BlindViewModel
 import hci_tp3.smart_penguin.ui.devices.lamp.LampViewModel
+import hci_tp3.smart_penguin.ui.devices.vacuum.VacuumViewModel
 import hci_tp3.smart_penguin.ui.rooms.RoomsViewModel
 import hci_tp3.smart_penguin.ui.routines.RoutinesViewModel
 
@@ -54,6 +57,15 @@ class ViewModelFactory (
 
             isAssignableFrom(LampViewModel::class.java) ->
                 LampViewModel(deviceRepository)
+
+            isAssignableFrom(BlindViewModel::class.java) ->
+                BlindViewModel(deviceRepository)
+
+            isAssignableFrom(AcViewModel::class.java) ->
+                AcViewModel(deviceRepository)
+
+            isAssignableFrom(VacuumViewModel::class.java) ->
+                VacuumViewModel(deviceRepository)
 
             isAssignableFrom(RoutinesViewModel::class.java) ->
                 RoutinesViewModel(routineRepository)
