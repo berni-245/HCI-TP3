@@ -14,3 +14,4 @@ data class DevicesUiState(
     val vacuums: List<Vacuum> = emptyList(),
     val acs: List<Ac> = emptyList()
 )
+val DevicesUiState.hasDevices: Boolean get() = lamps.isNotEmpty() || blinds.isNotEmpty() || vacuums.isNotEmpty() || acs.isNotEmpty()
