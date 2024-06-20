@@ -48,4 +48,6 @@
     <string name="pause_vacuum_action">Pause</string>
     <string name="set_dock_room_vacuum_action">Set dock room to</string>
     <string name="dock_vacuum_action">Dock</string>
+    <string name="turn_on_lamp_action">Turn on</string>
+    <string name="turn_off_lamp_action">Turn off</string>
 </resources>

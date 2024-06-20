@@ -38,8 +38,8 @@
     <string name="set_color_lamp_action">Establecer color</string>
     <string name="set_temp_ac_action">Establecer temperatura a</string>
     <string name="set_mode_ac_vacuum_action">Establecer modo</string>
-    <string name="set_vert_swing_ac_action">Establecer desplazamiento aspas vertical a</string>
-    <string name="set_horz_swing_ac">Establecer desplazamiento aspas horizontal a</string>
+    <string name="set_vert_swing_ac_action">Cambiar desplazamiento vertical a</string>
+    <string name="set_horz_swing_ac">Cambiar desplazamiento horizontal a</string>
     <string name="set_fan_speed_ac_action">Establecer velocidad a</string>
     <string name="open_blinds_action">Abrir</string>
     <string name="close_blind_action">Cerrar</string>
@@ -48,4 +48,6 @@
     <string name="pause_vacuum_action">Pausar</string>
     <string name="set_dock_room_vacuum_action">Cambiar Ubicación Base Carga</string>
     <string name="dock_vacuum_action">Regresar a base carga</string>
+    <string name="turn_on_lamp_action">Encender</string>
+    <string name="turn_off_lamp_action">Apagar</string>
 </resources>
