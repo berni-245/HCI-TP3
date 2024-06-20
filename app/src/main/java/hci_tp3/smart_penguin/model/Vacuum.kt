@@ -1,5 +1,8 @@
 package hci_tp3.smart_penguin.model
 
+import hci_tp3.smart_penguin.model.state.VacuumMode
+import hci_tp3.smart_penguin.model.state.VacuumStatus
+
 class Vacuum (
     id: String?,
     name: String,

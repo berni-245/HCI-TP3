@@ -1,4 +1,4 @@
-package hci_tp3.smart_penguin.remote.model
+package hci_tp3.smart_penguin.remote.model.state
 
 import com.google.gson.annotations.SerializedName
 class RemoteAcState {

@@ -1,5 +1,7 @@
 package hci_tp3.smart_penguin.model
 
+import hci_tp3.smart_penguin.model.state.BlindStatus
+
 class Blind (
     id: String?,
     name: String,

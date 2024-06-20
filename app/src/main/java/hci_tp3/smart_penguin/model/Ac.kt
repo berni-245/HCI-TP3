@@ -1,6 +1,8 @@
 package hci_tp3.smart_penguin.model
 
-import AcMode
+import hci_tp3.smart_penguin.model.state.AcMode
+import hci_tp3.smart_penguin.model.state.Status
+
 class Ac (
     id: String?,
     name: String,

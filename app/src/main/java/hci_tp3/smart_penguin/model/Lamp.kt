@@ -1,5 +1,7 @@
 package hci_tp3.smart_penguin.model
 
+import hci_tp3.smart_penguin.model.state.Status
+
 class Lamp(
     id: String?,
     name: String,

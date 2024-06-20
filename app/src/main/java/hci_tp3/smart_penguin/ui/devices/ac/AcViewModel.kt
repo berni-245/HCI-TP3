@@ -1,14 +1,12 @@
 package hci_tp3.smart_penguin.ui.devices.ac
 
-import AcMode
+import hci_tp3.smart_penguin.model.state.AcMode
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Ac
-import hci_tp3.smart_penguin.model.Blind
 import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.repository.DeviceRepository
-import hci_tp3.smart_penguin.ui.devices.blind.BlindUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

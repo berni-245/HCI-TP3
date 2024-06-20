@@ -1,7 +1,8 @@
 package hci_tp3.smart_penguin.remote.model
 
 import hci_tp3.smart_penguin.model.Lamp
-import hci_tp3.smart_penguin.model.Status
+import hci_tp3.smart_penguin.model.state.Status
+import hci_tp3.smart_penguin.remote.model.state.RemoteLampState
 
 class RemoteLamp : RemoteDevice<RemoteLampState>() {
 
