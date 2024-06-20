@@ -6,7 +6,6 @@ import hci_tp3.smart_penguin.model.state.Status
 import hci_tp3.smart_penguin.remote.model.state.RemoteAcState
 
 class RemoteAc : RemoteDevice<RemoteAcState>() {
-
     override fun asModel(): Ac {
         return Ac(
             id = id,
@@ -20,5 +19,4 @@ class RemoteAc : RemoteDevice<RemoteAcState>() {
             fanSpeed = state.fanSpeed
             )
     }
-
 }
