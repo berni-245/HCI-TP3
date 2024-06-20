@@ -22,12 +22,6 @@ class LampViewModel(
     private val _uiState = MutableStateFlow(LampUiState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Lamp?) }
-    }
-
     fun turnOn() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_ON_ACTION) },
         { state, _ -> state }
@@ -37,6 +31,17 @@ class LampViewModel(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_OFF_ACTION) },
         { state, _ -> state }
     )
+
+    fun setBrightness(brightness: Int) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_BRIGHTNESS_ACTION, arrayOf(brightness)) },
+        { state, _ -> state }
+    )
+
+    fun setColor(color: String) = runOnViewModelScope(
+        { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_COLOR_ACTION, arrayOf(color)) },
+        { state, _ -> state }
+    )
+
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
