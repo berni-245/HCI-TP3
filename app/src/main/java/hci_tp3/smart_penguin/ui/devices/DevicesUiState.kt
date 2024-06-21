@@ -8,6 +8,7 @@ import hci_tp3.smart_penguin.model.Vacuum
 
 data class DevicesUiState(
     val isFetching: Boolean = false,
+    val updating: Boolean = false,
     val error: Error? = null,
     val lamps: List<Lamp> = emptyList(),
     val blinds: List<Blind> = emptyList(),

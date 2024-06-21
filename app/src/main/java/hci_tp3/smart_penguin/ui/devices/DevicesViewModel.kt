@@ -9,6 +9,7 @@ import hci_tp3.smart_penguin.repository.DeviceRepository
 import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.model.Lamp
 import hci_tp3.smart_penguin.model.Vacuum
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DevicesViewModel(
-    repository: DeviceRepository
+    val repository: DeviceRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DevicesUiState())
@@ -37,6 +38,13 @@ class DevicesViewModel(
         }
     }
 
+    fun setDevice(deviceId: String) {
+        runOnViewModelScope(
+            { repository.setCurrentDevice(deviceId) },
+            { state, _ -> state }
+        )
+    }
+
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
         updateState: (DevicesUiState, T) -> DevicesUiState
@@ -45,6 +53,20 @@ class DevicesViewModel(
             .distinctUntilChanged()
             .catch { e -> _uiState.update { it.copy(error = handleError(e)) } }
             .collect { response -> _uiState.update { updateState(it, response) } }
+    }
+
+    private fun <R> runOnViewModelScope(
+        block: suspend () -> R,
+        updateState: (DevicesUiState, R) -> DevicesUiState
+    ): Job = viewModelScope.launch {
+        _uiState.update { it.copy(updating = true, error = null) }
+        runCatching {
+            block()
+        }.onSuccess { response ->
+            _uiState.update { updateState(it, response).copy(updating = false) }
+        }.onFailure { e ->
+            _uiState.update { it.copy(updating = false, error = handleError(e)) }
+        }
     }
 
     private fun handleError(e: Throwable): Error {

@@ -1,14 +1,8 @@
 package hci_tp3.smart_penguin.repository
 
-import hci_tp3.smart_penguin.model.Ac
-import hci_tp3.smart_penguin.model.Blind
 import hci_tp3.smart_penguin.model.Device
-import hci_tp3.smart_penguin.model.Lamp
-import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.remote.DeviceRemoteDataSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 class DeviceRepository(
@@ -17,8 +11,11 @@ class DeviceRepository(
     val devices: Flow<List<Device>> =
         remoteDataSource.devices
             .map { it.map { jt -> jt.asModel() } }
+    var currentDevice: Flow<Device>? = null
 
-
+    suspend fun setCurrentDevice(deviceId: String) {
+        currentDevice =  devices.map { it.first { jt -> jt.id == deviceId } }
+    }
     suspend fun getDevice(deviceId: String): Device {
         return remoteDataSource.getDevice(deviceId).asModel()
     }

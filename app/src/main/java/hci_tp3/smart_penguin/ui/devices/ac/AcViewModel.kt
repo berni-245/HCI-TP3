@@ -8,8 +8,11 @@ import hci_tp3.smart_penguin.model.Ac
 import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -19,6 +22,12 @@ class AcViewModel (
 
     private val _uiState = MutableStateFlow(AcUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        collectOnViewModelScope(
+            repository.currentDevice!!
+        ) { state, response -> state.copy(currentDevice = response as Ac?)}
+    }
 
     fun on() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.TURN_ON_ACTION) },
@@ -54,6 +63,16 @@ class AcViewModel (
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_FAN_SPEED_ACTION, arrayOf(speed)) },
         { state, _ -> state }
     )
+
+    private fun <T> collectOnViewModelScope(
+        flow: Flow<T>,
+        updateState: (AcUiState, T) -> AcUiState
+    ) = viewModelScope.launch {
+        flow
+            .distinctUntilChanged()
+            .catch { e -> _uiState.update { it.copy(error = handleError(e)) } }
+            .collect { response -> _uiState.update { updateState(it, response) } }
+    }
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,

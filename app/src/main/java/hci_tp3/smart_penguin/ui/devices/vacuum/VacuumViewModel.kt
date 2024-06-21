@@ -9,8 +9,11 @@ import hci_tp3.smart_penguin.model.state.VacuumMode
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import hci_tp3.smart_penguin.repository.RoomRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,6 +23,12 @@ class VacuumViewModel (
 
     private val _uiState = MutableStateFlow(VacuumUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        collectOnViewModelScope(
+            repository.currentDevice!!
+        ) { state, response -> state.copy(currentDevice = response as Vacuum?)}
+    }
 
     fun start() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.START_ACTION) },
@@ -50,6 +59,16 @@ class VacuumViewModel (
         { roomsRepository.getRooms(true) },
         { state, response -> state.copy(rooms = response) }
     )
+
+    private fun <T> collectOnViewModelScope(
+        flow: Flow<T>,
+        updateState: (VacuumUiState, T) -> VacuumUiState
+    ) = viewModelScope.launch {
+        flow
+            .distinctUntilChanged()
+            .catch { e -> _uiState.update { it.copy(error = handleError(e)) } }
+            .collect { response -> _uiState.update { updateState(it, response) } }
+    }
 
     private fun <R> runOnViewModelScope(
         block: suspend () -> R,
