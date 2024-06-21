@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import hci_tp3.smart_penguin.ui.component.AppBar
 import hci_tp3.smart_penguin.ui.component.AppBottomBar
 import hci_tp3.smart_penguin.ui.navigation.AppNavGraph
 import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 Scaffold(
+                    topBar ={ AppBar() } ,
                     bottomBar = {
                         AppBottomBar(
                             currentRoute = currentRoute
