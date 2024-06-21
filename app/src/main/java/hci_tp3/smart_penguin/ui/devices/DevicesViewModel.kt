@@ -38,6 +38,13 @@ class DevicesViewModel(
         }
     }
 
+    fun getDevices() {
+        runOnViewModelScope(
+            { repository.getDevices() },
+            { state, _ -> state }
+        )
+    }
+
     fun setDevice(deviceId: String) {
         runOnViewModelScope(
             { repository.setCurrentDevice(deviceId) },

@@ -8,10 +8,14 @@ import kotlinx.coroutines.flow.map
 class DeviceRepository(
     private val remoteDataSource: DeviceRemoteDataSource
 ) {
-    val devices: Flow<List<Device>> =
+    var devices: Flow<List<Device>> =
         remoteDataSource.devices
             .map { it.map { jt -> jt.asModel() } }
     var currentDevice: Flow<Device>? = null
+
+    suspend fun getDevices() {
+        remoteDataSource.updateDevices()
+    }
 
     suspend fun setCurrentDevice(deviceId: String) {
         currentDevice =  devices.map { it.first { jt -> jt.id == deviceId } }

@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 import hci_tp3.smart_penguin.R
 
@@ -49,30 +51,33 @@ fun DevicesScreen(
     viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory())
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    LazyColumn(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        if (uiState.lamps.isNotEmpty()) item { DeviceSection(DeviceType.LAMP, uiState.lamps) }
-        if (uiState.acs.isNotEmpty()) item { DeviceSection(DeviceType.AC, uiState.acs) }
-        if (uiState.blinds.isNotEmpty()) item { DeviceSection(DeviceType.BLIND, uiState.blinds) }
-        if (uiState.vacuums.isNotEmpty()) item { DeviceSection(DeviceType.VACUUM, uiState.vacuums) }
-        if (!uiState.hasDevices) {
-            item {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_no_devices),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.size(500.dp),
-                    )
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = uiState.isFetching)
+    SwipeRefresh(state = swipeRefreshState, onRefresh = viewModel::getDevices) {
+        LazyColumn(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            if (uiState.lamps.isNotEmpty()) item { DeviceSection(DeviceType.LAMP, uiState.lamps) }
+            if (uiState.acs.isNotEmpty()) item { DeviceSection(DeviceType.AC, uiState.acs) }
+            if (uiState.blinds.isNotEmpty()) item { DeviceSection(DeviceType.BLIND, uiState.blinds) }
+            if (uiState.vacuums.isNotEmpty()) item { DeviceSection(DeviceType.VACUUM, uiState.vacuums) }
+            if (!uiState.hasDevices) {
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_no_devices),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.size(500.dp),
+                        )
+                    }
                 }
             }
-        }
 
+        }
     }
 }
 

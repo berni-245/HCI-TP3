@@ -21,7 +21,7 @@ class RoutinesViewModel(
         getRoutines(true)
     }
 
-    fun getRoutines(refresh: Boolean = false) = runOnViewModelScope(
+    fun getRoutines(refresh: Boolean = true) = runOnViewModelScope(
         { repository.getRoutines(refresh) },
         { state, response -> state.copy(routines = response) }
     )
