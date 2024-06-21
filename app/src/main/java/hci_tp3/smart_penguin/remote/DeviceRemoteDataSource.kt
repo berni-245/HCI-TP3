@@ -4,10 +4,8 @@ import hci_tp3.smart_penguin.remote.api.DeviceService
 import hci_tp3.smart_penguin.remote.model.RemoteDevice
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.selects.onTimeout
 import kotlinx.coroutines.selects.select
 
@@ -20,16 +18,16 @@ class DeviceRemoteDataSource(
     @OptIn(ExperimentalCoroutinesApi::class)
     val devices: Flow<List<RemoteDevice<*>>> = flow {
         while (true) {
+            val devices = handleApiResponse {
+                deviceService.getDevices()
+            }
+            emit(devices)
             select {
                 updateChannel.onReceive {
                 }
                 onTimeout(DELAY) {
                 }
             }
-            val devices = handleApiResponse {
-                deviceService.getDevices()
-            }
-            emit(devices)
         }
     }
 
