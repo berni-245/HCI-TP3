@@ -1,16 +1,15 @@
 package hci_tp3.smart_penguin.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hci_tp3.smart_penguin.R
@@ -25,15 +24,11 @@ fun AppBar(modifier: Modifier = Modifier) {
         title = {
 
                 Image(
-                    painter =   painterResource(id = R.mipmap.ic_launcher_foreground),
+                    painter =   painterResource(id = R.drawable.penguin),
                     contentDescription = "Logo",
+                    modifier = Modifier.fillMaxSize().padding(top = 10.dp, bottom = 10.dp)
 
                 )
-                Text(
-                    text = stringResource(R.string.app_name),
-                    modifier = Modifier.padding(start = 140.dp ,top = 20.dp)
-                )
-
 
         },
         colors = topAppBarColors(
