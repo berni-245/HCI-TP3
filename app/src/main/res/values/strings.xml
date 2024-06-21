@@ -22,6 +22,8 @@
     <string name="vacuums">Vacuums</string>
     <string name="status_on">ON</string>
     <string name="status_off">OFF</string>
+    <string name="lamp_intensity">Intensity</string>
+    <string name="lamp_color">Color</string>
     <string name="ac_mode_cool">Cool</string>
     <string name="ac_mode_heat">Heat</string>
     <string name="ac_mode_fan">Fan</string>

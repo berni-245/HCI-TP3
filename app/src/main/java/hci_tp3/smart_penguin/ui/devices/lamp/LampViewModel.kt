@@ -28,7 +28,7 @@ class LampViewModel(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_OFF_ACTION) },
         { state, _ -> state }
     )
-
+//Between 1 to 100
     fun setBrightness(brightness: Int) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_BRIGHTNESS_ACTION, arrayOf(brightness)) },
         { state, _ -> state }

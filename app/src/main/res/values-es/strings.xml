@@ -22,6 +22,8 @@
     <string name="vacuums">Aspiradoras</string>
     <string name="status_on">Encendido</string>
     <string name="status_off">Apagado</string>
+    <string name="lamp_intensity">Intensidad</string>
+    <string name="lamp_color">Color</string>
     <string name="ac_mode_cool">Frío</string>
     <string name="ac_mode_heat">Caliente</string>
     <string name="ac_mode_fan">Ventilador</string>

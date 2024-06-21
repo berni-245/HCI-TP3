@@ -2,6 +2,7 @@ package hci_tp3.smart_penguin.ui.devices
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import hci_tp3.smart_penguin.R
 
 import hci_tp3.smart_penguin.model.Device
 import hci_tp3.smart_penguin.model.DeviceType
+import hci_tp3.smart_penguin.ui.devices.lamp.LampScreen
 import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 

@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation("com.google.accompanist:accompanist-flowlayout:0.28.0")
+    implementation("com.github.skydoves:colorpicker-compose:1.0.8")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
