@@ -18,11 +18,11 @@ class RoutinesViewModel(
     val uiState = _uiState.asStateFlow()
 
     init {
-        getRoutines()
+        getRoutines(true)
     }
 
-    fun getRoutines() = runOnViewModelScope(
-        { repository.getRoutines(true) },
+    fun getRoutines(refresh: Boolean = false) = runOnViewModelScope(
+        { repository.getRoutines(refresh) },
         { state, response -> state.copy(routines = response) }
     )
 
@@ -32,8 +32,8 @@ class RoutinesViewModel(
         )
 
 
-    fun executeRoutine() = runOnViewModelScope(
-            { repository.executeRoutine(uiState.value.currentRoutine?.id!!) },
+    fun executeRoutine(routineId: String = uiState.value.currentRoutine?.id!!) = runOnViewModelScope(
+            { repository.executeRoutine(routineId) },
             { state, _ -> state }
         )
 
