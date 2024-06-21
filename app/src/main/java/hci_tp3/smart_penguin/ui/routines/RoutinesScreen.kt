@@ -11,7 +11,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import hci_tp3.smart_penguin.ui.getViewModelFactory
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.unit.dp
-import hci_tp3.smart_penguin.R
 
 @Composable
 fun RoutinesScreen(
@@ -29,7 +28,7 @@ fun RoutinesScreen(
         ) {
 
             items(items = routineList){ item ->
-                RoutineCard(routineName = item.name, routineDescription = "Routina" + item.name + " desc not implemented")
+                RoutineCard(routineName = item.name, routineDescription = item.desc!!)
             }
         }
     }

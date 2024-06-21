@@ -14,14 +14,14 @@ class RemoteRoutine {
     lateinit var actions: List<RemoteAction>
 
     @SerializedName("meta")
-    var meta: Any? = null
+    var meta: RemoteRoutineMeta? = null
 
     fun asModel() : Routine {
         return Routine(
-            id,
-            name,
-            actions.map { it.asModel() },
-            meta
+            id = id,
+            name = name,
+            actions = actions.map { it.asModel() },
+            desc = meta?.desc!!
         )
     }
 }
