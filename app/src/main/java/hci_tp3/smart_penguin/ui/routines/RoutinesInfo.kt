@@ -55,7 +55,7 @@ fun RoutinesInfo(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(130.dp)
-                    .padding(16.dp)
+                    .padding(start = 16.dp, end = 16.dp, top = 10.dp)
             ) {
 
                 HandleDeviceType(action = action)
