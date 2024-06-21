@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -92,8 +94,14 @@ fun PrintActionName(name: String) {
 
 @Composable
 fun BlindHandler(action: Action) {
-    /* TODO Icon(painter = , contentDescription = )*/
-    PrintActionName(action.device.name)
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(start = 10.dp)
+    ) {
+        Icon(painter = painterResource(DeviceType.BLIND.icon) , contentDescription = "ac" )
+        PrintActionName(action.device.name)
+    }
+
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
@@ -122,8 +130,15 @@ fun BlindHandler(action: Action) {
 
 @Composable
 fun LampHandler(action: Action) {
-    /* TODO Icon(painter = , contentDescription = )*/
-    PrintActionName(action.device.name)
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(start = 10.dp)
+    ) {
+        Icon(painter = painterResource(DeviceType.LAMP.icon) , contentDescription = "ac" )
+        PrintActionName(action.device.name)
+    }
+
+
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
@@ -163,8 +178,14 @@ fun LampHandler(action: Action) {
 
 @Composable
 fun AcHandler(action: Action) {
-    /* TODO Icon(painter = , contentDescription = )*/
-    PrintActionName(action.device.name)
+   Row (
+       verticalAlignment = Alignment.CenterVertically,
+       modifier = Modifier.padding(start = 10.dp)
+   ) {
+       Icon(painter = painterResource(DeviceType.AC.icon) , contentDescription = "ac" )
+       PrintActionName(action.device.name)
+   }
+
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
@@ -216,8 +237,14 @@ fun AcHandler(action: Action) {
 
 @Composable
 fun VacuumHandler(action: Action) {
-    /* TODO Icon(painter = , contentDescription = )*/
-    PrintActionName(action.device.name)
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(start = 10.dp)
+    ) {
+        Icon(painter = painterResource(DeviceType.VACUUM.icon) , contentDescription = "ac" )
+        PrintActionName(action.device.name)
+    }
+
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
@@ -278,16 +305,12 @@ fun RoutinesInfoPreview() {
         val d2 = Vacuum(id="22","Robocop",null,VacuumStatus.ACTIVE,VacuumMode.MOP,50)
         val d3 = Blind(id="19","Cortina Cocina",null,BlindStatus.CLOSED,0,0)
         val d4 = Ac(id="21","Aire Dormitorio",null,Status.OFF,20,AcMode.FAN,"30","30","50")
-        var a1 = Action(device = d4, actionName = "turnOn", params = emptyList(), null)
-        var a2 = Action(device = d4, actionName = "turnOff", params = emptyList(), null)
-        var a3 = Action(device = d4, actionName = "setTemperature", params = listOf("18"), null)
-        var a4 = Action(device = d4, actionName = "setMode", params = listOf("modo"), null)
-        var a5 = Action(device = d4, actionName = "setVerticalSwing", params = listOf("90"), null)
-        var a6 = Action(device = d4, actionName = "setHorizontalSwing", params = listOf("15"), null)
+
+        var a6 = Action(device = d3, actionName = "setLevel", params = listOf("15"), null)
         var a7 = Action(device = d4, actionName = "setFanSpeed", params = listOf("100"), null)
-        var a8 = Action(device = d4, actionName = "setMode", params = listOf("Mop"), null)
-        var a9 = Action(device = d4, actionName = "setLocation", params = listOf("Hall"), null)
-        var actions = listOf(a6,a7)
+        var a8 = Action(device = d2, actionName = "setMode", params = listOf("Mop"), null)
+        var a9 = Action(device = d1, actionName = "setColor", params = listOf("768930"), null)
+        var actions = listOf(a6,a7,a8,a9)
         var routine = Routine(id = "1234", name = "My Really Cool Routine", actions, null)
         RoutinesInfo(routine = routine)
     }
@@ -310,16 +333,11 @@ fun RoutinesInfoPreviewEs() {
         val d3 = Blind(id="19","Cortina Cocina",null,BlindStatus.CLOSED,0,0)
         val d4 = Ac(id="21","Aire Dormitorio",null,Status.OFF,20,AcMode.FAN,"30","30","50")
 
-        var a1 = Action(device = d4, actionName = "turnOn", params = emptyList(), null)
-        var a2 = Action(device = d4, actionName = "turnOff", params = emptyList(), null)
-        var a3 = Action(device = d4, actionName = "setTemperature", params = listOf("18"), null)
-        var a4 = Action(device = d4, actionName = "setMode", params = listOf("modo"), null)
-        var a5 = Action(device = d4, actionName = "setVerticalSwing", params = listOf("90"), null)
-        var a6 = Action(device = d4, actionName = "setHorizontalSwing", params = listOf("15"), null)
+        var a6 = Action(device = d3, actionName = "setLevel", params = listOf("15"), null)
         var a7 = Action(device = d4, actionName = "setFanSpeed", params = listOf("100"), null)
-        var a8 = Action(device = d4, actionName = "setMode", params = listOf("Mop"), null)
-        var a9 = Action(device = d4, actionName = "setLocation", params = listOf("Hall"), null)
-        var actions = listOf(a6,a7)
+        var a8 = Action(device = d2, actionName = "setMode", params = listOf("Mop"), null)
+        var a9 = Action(device = d1, actionName = "setColor", params = listOf("FFF000"), null)
+        var actions = listOf(a6,a7,a8,a9)
         var routine = Routine(id = "1234", name = "Mi Rutina", actions, null)
         RoutinesInfo(routine = routine)
     }
