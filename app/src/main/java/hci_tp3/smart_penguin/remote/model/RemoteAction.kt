@@ -5,7 +5,7 @@ import hci_tp3.smart_penguin.model.Action
 
 class RemoteAction {
     @SerializedName("device")
-    lateinit var device: RemoteDevice<*>
+    lateinit var deviceForRoutine: RemoteDeviceForRoutine
 
     @SerializedName("actionName")
     lateinit var actionName: String
@@ -18,7 +18,7 @@ class RemoteAction {
 
     fun asModel(): Action {
         return Action(
-            device.asModel(),
+            deviceForRoutine.asModel(),
             actionName,
             params,
             meta

@@ -27,6 +27,7 @@ import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.Ac
 import hci_tp3.smart_penguin.model.Action
 import hci_tp3.smart_penguin.model.Blind
+import hci_tp3.smart_penguin.model.DeviceForRoutine
 import hci_tp3.smart_penguin.model.DeviceType
 import hci_tp3.smart_penguin.model.Lamp
 import hci_tp3.smart_penguin.model.Routine
@@ -294,17 +295,14 @@ fun RoutineInfoScreen(
 fun RoutinesInfoPreview() {
     HCITP3Theme {
 
-        var d1 = Lamp(
+        var d1 = DeviceForRoutine(
             "13",
             "Lamparita",
-            status = Status.OFF,
-            color = "FFFFFF",
-            brightness = 10,
-            room = null
+            DeviceType.LAMP
         )
-        val d2 = Vacuum(id="22","Robocop",null,VacuumStatus.ACTIVE,VacuumMode.MOP,50)
-        val d3 = Blind(id="19","Cortina Cocina",null,BlindStatus.CLOSED,0,0)
-        val d4 = Ac(id="21","Aire Dormitorio",null,Status.OFF,20,AcMode.FAN,"30","30","50")
+        val d2 = DeviceForRoutine(id="22","Robocop",DeviceType.VACUUM)
+        val d3 = DeviceForRoutine(id="19","Cortina Cocina",DeviceType.BLIND)
+        val d4 = DeviceForRoutine(id="21","Aire Dormitorio",DeviceType.AC)
 
         var a6 = Action(device = d3, actionName = "setLevel", params = listOf("15"), null)
         var a7 = Action(device = d4, actionName = "setFanSpeed", params = listOf("100"), null)
@@ -321,17 +319,14 @@ fun RoutinesInfoPreview() {
 fun RoutinesInfoPreviewEs() {
     HCITP3Theme {
 
-        var d1 = Lamp(
+        var d1 = DeviceForRoutine(
             "13",
             "Lamparita",
-            status = Status.OFF,
-            color = "FFFFFF",
-            brightness = 10,
-            room = null
+            DeviceType.LAMP
         )
-        val d2 = Vacuum(id="22","Robocop",null,VacuumStatus.ACTIVE,VacuumMode.MOP,50)
-        val d3 = Blind(id="19","Cortina Cocina",null,BlindStatus.CLOSED,0,0)
-        val d4 = Ac(id="21","Aire Dormitorio",null,Status.OFF,20,AcMode.FAN,"30","30","50")
+        val d2 = DeviceForRoutine(id="22","Robocop",DeviceType.VACUUM)
+        val d3 = DeviceForRoutine(id="19","Cortina Cocina",DeviceType.BLIND)
+        val d4 = DeviceForRoutine(id="21","Aire Dormitorio",DeviceType.AC)
 
         var a6 = Action(device = d3, actionName = "setLevel", params = listOf("15"), null)
         var a7 = Action(device = d4, actionName = "setFanSpeed", params = listOf("100"), null)
