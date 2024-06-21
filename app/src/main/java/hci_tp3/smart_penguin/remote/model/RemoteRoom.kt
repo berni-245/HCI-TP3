@@ -11,14 +11,12 @@ class RemoteRoom {
     lateinit var name: String
 
     @SerializedName("meta")
-    lateinit var meta: RemoteRoomMeta
+    var meta: Any? = null
 
     fun asModel() : Room {
         return Room(
             id = id,
-            name = name,
-            size = meta.size,
-            color = meta.color
+            name = name
         )
     }
 }
