@@ -34,13 +34,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 
 import hci_tp3.smart_penguin.R
 
 import hci_tp3.smart_penguin.model.Device
 import hci_tp3.smart_penguin.model.DeviceType
-import hci_tp3.smart_penguin.ui.devices.lamp.LampScreen
 import hci_tp3.smart_penguin.ui.getViewModelFactory
+import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 
 @Composable
@@ -77,8 +78,9 @@ fun DevicesScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun DeviceSection(deviceType: DeviceType, devices: List<Device>) {
+fun DeviceSection(deviceType: DeviceType, devices: List<Device>, viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory())) {
     val title = deviceType.getString()
+    val navController = rememberNavController()
     HCITP3Theme {
         Column {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -108,7 +110,16 @@ fun DeviceSection(deviceType: DeviceType, devices: List<Device>) {
                             .clip(RoundedCornerShape(8.dp))
                             .background(colorScheme.primaryContainer)
                             .size(100.dp)
-                            .padding(10.dp),
+                            .padding(10.dp)
+                            .clickable {
+                                viewModel.setDevice(device.id!!)
+                                when (device.type) {
+                                    DeviceType.AC -> navController.navigate(AppDestinations.AC.route)
+                                    DeviceType.LAMP -> navController.navigate(AppDestinations.LAMP.route)
+                                    DeviceType.BLIND -> navController.navigate(AppDestinations.BLIND.route)
+                                    DeviceType.VACUUM -> navController.navigate(AppDestinations.VACUUM.route)
+                                }
+                            },
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(text = device.name, fontSize = 16.sp)
