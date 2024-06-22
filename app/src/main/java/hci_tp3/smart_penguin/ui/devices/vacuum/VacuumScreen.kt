@@ -2,7 +2,6 @@ package hci_tp3.smart_penguin.ui.devices.vacuum
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -68,9 +67,11 @@ fun VacuumScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SingleChoiceSegmentedCard(
-                    choices = listOf(VacuumMode.VACUUM.getString(), VacuumMode.MOP.getString()),
-                    selectedChoice = currentDevice.mode.getString(),
-                    onChoiceSelected = {}
+                    choices = listOf(VacuumMode.VACUUM, VacuumMode.MOP),
+                    selectedChoice = currentDevice.mode,
+                    onChoiceSelected = { mode ->
+                        viewModel.setMode(if (mode == VacuumMode.VACUUM) VacuumMode.VACUUM else VacuumMode.MOP)
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -153,9 +154,9 @@ fun VacuumScreen(
 
 @Composable
 fun SingleChoiceSegmentedCard(
-    choices: List<String>,
-    selectedChoice: String,
-    onChoiceSelected: (String) -> Unit
+    choices: List<VacuumMode>,
+    selectedChoice: VacuumMode,
+    onChoiceSelected: (VacuumMode) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -174,7 +175,7 @@ fun SingleChoiceSegmentedCard(
                         .padding(12.dp)
                 ) {
                     Text(
-                        text = choice,
+                        text = choice.getString(),
                     )
                 }
             }
