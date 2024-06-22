@@ -64,4 +64,5 @@
     <string name="go_to_base">Go to base</string>
     <string name="battery">"Battery: "</string>
     <string name="low_battery">Low battery…</string>
+    <string name="low_battery_vacuum_notification_title">Your vacuum is running low on battery</string>
 </resources>

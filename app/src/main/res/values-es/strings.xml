@@ -64,4 +64,5 @@
     <string name="go_to_base">Ir a base</string>
     <string name="battery">"Batería: "</string>
     <string name="low_battery">Batería baja…</string>
+    <string name="low_battery_vacuum_notification_title">Su aspiradora se esta quedando sin bateria</string>
 </resources>

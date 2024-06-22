@@ -43,7 +43,12 @@ class ApiApplication  : Application() {
 
     private fun collectServerEvents(){
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this,NotificationEvaluator(deviceRemoteDataSource)::class.java)
+        val lowBatteryVacuum : Array<String> = emptyArray<String>()
+        val chargedBatteryVacuum : Array<String> = emptyArray<String>()
+        val intent = Intent(this,NotificationEvaluator::class.java).apply {
+            putExtra("low_battery_vacuum",lowBatteryVacuum)
+            putExtra("charged_battery_vacuum",chargedBatteryVacuum)
+        }
 
         var pendingIntent = PendingIntent.getBroadcast(
             this,0,intent,PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
