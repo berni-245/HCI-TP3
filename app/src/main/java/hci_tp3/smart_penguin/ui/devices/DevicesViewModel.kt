@@ -25,6 +25,7 @@ class DevicesViewModel(
     private val _uiState = MutableStateFlow(DevicesUiState())
     val uiState = _uiState.asStateFlow()
 
+
     init {
         collectOnViewModelScope(
             repository.devices,

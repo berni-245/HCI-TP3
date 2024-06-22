@@ -1,10 +1,15 @@
 package hci_tp3.smart_penguin
 
+import android.app.AlarmManager
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.os.SystemClock
+import hci_tp3.smart_penguin.notification.NotificationEvaluator
 import hci_tp3.smart_penguin.remote.DeviceRemoteDataSource
 import hci_tp3.smart_penguin.remote.RoomRemoteDataSource
 import hci_tp3.smart_penguin.remote.RoutineRemoteDataSource
@@ -18,6 +23,7 @@ class ApiApplication  : Application() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        collectServerEvents()
     }
 
     private fun createNotificationChannel(){
@@ -35,6 +41,23 @@ class ApiApplication  : Application() {
         }
     }
 
+    private fun collectServerEvents(){
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this,NotificationEvaluator(deviceRemoteDataSource)::class.java)
+
+        var pendingIntent = PendingIntent.getBroadcast(
+            this,0,intent,PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        )
+        if(pendingIntent != null)
+            alarmManager.cancel(pendingIntent)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            SystemClock.currentThreadTimeMillis(),
+            60000,pendingIntent
+        )
+
+    }
     private val roomRemoteDataSource: RoomRemoteDataSource
         get() = RoomRemoteDataSource(RetrofitClient.roomService)
 
