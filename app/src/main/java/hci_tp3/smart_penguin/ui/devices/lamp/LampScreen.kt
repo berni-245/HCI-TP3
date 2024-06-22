@@ -36,6 +36,7 @@ fun LampScreen(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
+        Text(text = uiLampUiState.currentDevice?.name ?: "No cargó")
         if (checked) {
             Text(
                 text = stringResource(id = R.string.execute_turn_off)
@@ -80,8 +81,8 @@ fun LampScreen(
                 lampViewModel.setColor(colorEnvelope.hexCode)
             })
     }
-    Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
-        Text(stringResource(id = R.string.close_blind_action))
-    }
+//    Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
+//        Text(stringResource(id = R.string.close_blind_action))
+//    }
 
 }

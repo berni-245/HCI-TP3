@@ -148,9 +148,9 @@ fun VacuumScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             // Close button
-            Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
-                Text(text = stringResource(R.string.close_blind_action))
-            }
+//            Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
+//                Text(text = stringResource(R.string.close_blind_action))
+//            }
         }
     }
 }

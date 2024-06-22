@@ -32,13 +32,15 @@ fun BlindScreen(
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        if(checked){
+        if (checked) {
             Text(
                 text = stringResource(id = R.string.open_blinds_action)
-            ) } else {
+            )
+        } else {
             Text(
                 text = stringResource(id = R.string.close_blind_action)
-            ) }
+            )
+        }
         Switch(
             checked = uiBlindUiState.currentDevice?.status == BlindStatus.CLOSED,
             onCheckedChange = {
@@ -63,9 +65,8 @@ fun BlindScreen(
             valueRange = 1f..100f
         )
     }
-    val navController = rememberNavController()
-    Button(onClick = { navController.navigate(AppDestinations.DEVICES.route) }) {
-        Text(stringResource(id = R.string.close_blind_action))
-    }
+//    Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
+//        Text(stringResource(id = R.string.close_blind_action))
+//    }
 
 }
