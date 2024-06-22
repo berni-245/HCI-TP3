@@ -27,6 +27,11 @@
     <string name="ac_mode_cool">Frío</string>
     <string name="ac_mode_heat">Caliente</string>
     <string name="ac_mode_fan">Ventilador</string>
+    <string name="ac_temp_set">Temperatura</string>
+    <string name="ac_mode">Modo</string>
+    <string name="ac_speed">Velocidad</string>
+    <string name="ac_h_swing">Swing Horizontal</string>
+    <string name="ac_v_swing">Swing Vertical</string>
     <string name="blind_status_opening">Abriendo</string>
     <string name="blind_status_opened">Abierto</string>
     <string name="blind_status_closing">Cerrando</string>
