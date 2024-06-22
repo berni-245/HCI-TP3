@@ -5,7 +5,7 @@ import hci_tp3.smart_penguin.remote.RoutineRemoteDataSource
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class RoutineRepository (
+class RoutineRepository(
     private val remoteDataSource: RoutineRemoteDataSource
 ) {
     private var routines: List<Routine> = emptyList()
@@ -32,4 +32,5 @@ class RoutineRepository (
 
     suspend fun executeRoutine(routineId: String): List<*> {
         return remoteDataSource.executeRoutine(routineId)
-    }}
+    }
+}
