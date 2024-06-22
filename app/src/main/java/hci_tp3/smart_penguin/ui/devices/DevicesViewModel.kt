@@ -49,7 +49,7 @@ class DevicesViewModel(
 
     fun setDevice(device: Device) {
         runOnViewModelScope(
-            { repository.setCurrentDevice(device) },
+            { repository.setCurrentDevice(device.id!!) },
             { state, _ -> state }
         )
     }

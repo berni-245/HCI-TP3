@@ -35,112 +35,122 @@ fun VacuumScreen(
     val uiState by viewModel.uiState.collectAsState()
     var expanded by remember { mutableStateOf(false) }
 
-
-    Column(
-        modifier = Modifier
-            .padding(16.dp),
-    ) {
-        // Header with title and icons
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+    if (uiState.currentDevice == null) {
+        // Mostrar un indicador de carga mientras los datos se están obteniendo
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         ) {
-            Text(text = uiState.currentDevice!!.name,
-                fontSize = 22.sp,
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier)
+            CircularProgressIndicator()
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Control buttons
-        Button(
-            onClick = {
-                        if(uiState.currentDevice?.status == VacuumStatus.ACTIVE) viewModel.pause()
-                        else viewModel.start()
-                      },
-            enabled = uiState.isThereBatteryLeft)
-        {
-            Icon(
-                if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) Icons.Default.Pause
-                else Icons.Default.PlayArrow,
-                contentDescription = if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) "Pause" else "Play"
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        SingleChoiceSegmentedCard(
-            choices = listOf(VacuumMode.VACUUM.getString(), VacuumMode.MOP.getString()),
-            selectedChoice = uiState.currentDevice!!.mode.getString(),
-            onChoiceSelected = { /* TODO: change mode */}
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Room selection dropdown
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
+    } else {
+        Column(
+            modifier = Modifier
+                .padding(16.dp),
         ) {
-            TextField(
-                value = uiState.currentDevice!!.room!!.name,
-                onValueChange = {
-                },
-                readOnly = true,
-                enabled = uiState.isThereBatteryLeft,
-                label = { Text(stringResource(R.string.Room)) },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = LocalConfiguration.current.screenWidthDp.dp / 5)
-                    .menuAnchor()
-            )
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
+            // Header with title and icons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                uiState.rooms.forEach { room ->
-                    DropdownMenuItem(
-                        text = { Text(text = room.name) },
-                        onClick = {
-                            viewModel.setLocation(room.id!!)
-                        }
-                    )
+                Text(
+                    text = uiState.currentDevice!!.name,
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Control buttons
+            Button(
+                onClick = {
+                    if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) viewModel.pause()
+                    else viewModel.start()
+                },
+                enabled = uiState.isThereBatteryLeft
+            ) {
+                Icon(
+                    if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) Icons.Default.Pause
+                    else Icons.Default.PlayArrow,
+                    contentDescription = if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) "Pause" else "Play"
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            SingleChoiceSegmentedCard(
+                choices = listOf(VacuumMode.VACUUM.getString(), VacuumMode.MOP.getString()),
+                selectedChoice = uiState.currentDevice!!.mode.getString(),
+                onChoiceSelected = { /* TODO: change mode */}
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Room selection dropdown
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded }
+            ) {
+                TextField(
+                    value = uiState.currentDevice!!.room?.name ?: "aaa",
+                    onValueChange = {
+                    },
+                    readOnly = true,
+                    enabled = uiState.isThereBatteryLeft,
+                    label = { Text(stringResource(R.string.Room)) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = LocalConfiguration.current.screenWidthDp.dp / 5)
+                        .menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    uiState.rooms.forEach { room ->
+                        DropdownMenuItem(
+                            text = { Text(text = room.name) },
+                            onClick = {
+                                viewModel.setLocation(room.id!!)
+                            }
+                        )
+                    }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Base button
-        ElevatedCard(
-            onClick = { viewModel.dock() },
-            modifier = Modifier
-        ) {
-            Box(
-                modifier = Modifier.padding(12.dp)
-            ) {
-                if(uiState.currentDevice!!.status == VacuumStatus.DOCKED)
-                    Text(text = stringResource(R.string.in_base))
-                else
-                    Text(text = stringResource(R.string.go_to_base))
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(text = stringResource(R.string.battery) + uiState.currentDevice!!.batteryLevel.toString() + "%")
-        if (! uiState.isThereBatteryLeft) {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(stringResource(R.string.low_battery))
-        }
 
+            // Base button
+            ElevatedCard(
+                onClick = { viewModel.dock() },
+                modifier = Modifier.size(64.dp) // Adjust size as needed
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    if (uiState.currentDevice!!.status == VacuumStatus.DOCKED)
+                        Text(text = stringResource(R.string.in_base))
+                    else
+                        Text(text = stringResource(R.string.go_to_base))
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text(text = stringResource(R.string.battery) + uiState.currentDevice!!.batteryLevel.toString() + "%")
+            if (!uiState.isThereBatteryLeft) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(stringResource(R.string.low_battery))
+            }
 
-        // Close button
-        Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
-            Text(text = stringResource(R.string.close_blind_action))
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Close button
+            Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
+                Text(text = stringResource(R.string.close_blind_action))
+            }
         }
     }
 }
