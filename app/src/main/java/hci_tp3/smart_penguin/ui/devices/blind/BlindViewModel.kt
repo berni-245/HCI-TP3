@@ -24,7 +24,7 @@ class BlindViewModel (
 
     init {
         collectOnViewModelScope(
-            repository.currentDevice!!
+            repository.currentDevice
         ) { state, response -> state.copy(currentDevice = response as Blind?)}
     }
 

@@ -1,6 +1,5 @@
 package hci_tp3.smart_penguin.ui.devices
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,21 +34,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-
 import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.Device
 import hci_tp3.smart_penguin.model.DeviceType
 import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.navigation.AppDestinations
-import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 
 @Composable
 fun DevicesScreen(
     viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory()),
+    onNavigateDestination: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = uiState.isFetching)
@@ -57,10 +53,28 @@ fun DevicesScreen(
         LazyColumn(
             modifier = Modifier.padding(16.dp)
         ) {
-            if (uiState.lamps.isNotEmpty()) item { DeviceSection(DeviceType.LAMP, uiState.lamps) }
-            if (uiState.acs.isNotEmpty()) item { DeviceSection(DeviceType.AC, uiState.acs) }
-            if (uiState.blinds.isNotEmpty()) item { DeviceSection(DeviceType.BLIND, uiState.blinds) }
-            if (uiState.vacuums.isNotEmpty()) item { DeviceSection(DeviceType.VACUUM, uiState.vacuums) }
+            if (uiState.lamps.isNotEmpty()) item {
+                DeviceSection(
+                    DeviceType.LAMP, uiState.lamps, onNavigateDestination = onNavigateDestination
+                )
+            }
+            if (uiState.acs.isNotEmpty()) item {
+                DeviceSection(
+                    DeviceType.AC, uiState.acs, onNavigateDestination = onNavigateDestination
+                )
+            }
+            if (uiState.blinds.isNotEmpty()) item {
+                DeviceSection(
+                    DeviceType.BLIND, uiState.blinds, onNavigateDestination = onNavigateDestination
+                )
+            }
+            if (uiState.vacuums.isNotEmpty()) item {
+                DeviceSection(
+                    DeviceType.VACUUM,
+                    uiState.vacuums,
+                    onNavigateDestination = onNavigateDestination
+                )
+            }
             if (!uiState.hasDevices) {
                 item {
                     Column(
@@ -77,7 +91,6 @@ fun DevicesScreen(
                     }
                 }
             }
-
         }
     }
 }
@@ -87,66 +100,55 @@ fun DevicesScreen(
 fun DeviceSection(
     deviceType: DeviceType,
     devices: List<Device>,
-    viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory())
+    viewModel: DevicesViewModel = viewModel(factory = getViewModelFactory()),
+    onNavigateDestination: (String) -> Unit
 ) {
     val title = deviceType.getString()
-    val navController = rememberNavController()
-    HCITP3Theme {
-        Column {
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Medium)
-                Icon(
-                    painter = painterResource(id = deviceType.icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            HorizontalDivider(thickness = 2.dp, color = colorScheme.tertiary)
-            Spacer(modifier = Modifier.height(20.dp))
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                devices.forEach { device ->
-                    Box(
-                        modifier = Modifier
-                            .shadow(
-                                elevation = 10.dp,
-                                shape = RoundedCornerShape(8.dp),
-                            )
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(colorScheme.primaryContainer)
-                            .size(100.dp)
-                            .padding(10.dp)
-                            .clickable {
-                                viewModel.setDevice(device.id!!)
-                                when (device.type) {
-                                    DeviceType.AC -> navController.navigate(AppDestinations.AC.route)
-                                    DeviceType.LAMP -> {
-                                        Log.d("Device LAMP", "outside")
-                                        navController.navigate(AppDestinations.ROUTINES.route)
-                                        {
-                                            Log.d("Device LAMP", "inside")
-//                                            popUpTo(navController.graph.findStartDestination().id) {
-//                                                saveState = true
-//                                            }
-//                                            launchSingleTop = true
-//                                            restoreState = true
-                                        }
-                                    }
-                                    DeviceType.BLIND -> navController.navigate(AppDestinations.BLIND.route)
-                                    DeviceType.VACUUM -> navController.navigate(AppDestinations.VACUUM.route)
-                                }
-                            },
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(text = device.name, fontSize = 16.sp)
-                    }
+    Column {
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Medium)
+            Icon(
+                painter = painterResource(id = deviceType.icon),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        HorizontalDivider(
+            thickness = 2.dp, color = colorScheme.tertiary, modifier = Modifier.fillMaxWidth(0.7F)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            devices.forEach { device ->
+                Box(
+                    modifier = Modifier
+                        .shadow(
+                            elevation = 10.dp,
+                            shape = RoundedCornerShape(8.dp),
+                        )
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(colorScheme.primaryContainer)
+                        .size(100.dp)
+                        .padding(10.dp)
+                        .clickable {
+                            viewModel.setDevice(device)
+                            when (device.type) {
+                                DeviceType.AC -> onNavigateDestination(AppDestinations.AC.route)
+                                DeviceType.LAMP -> onNavigateDestination(AppDestinations.LAMP.route)
+                                DeviceType.BLIND -> onNavigateDestination(AppDestinations.BLIND.route)
+                                DeviceType.VACUUM -> onNavigateDestination(AppDestinations.VACUUM.route)
+                            }
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(text = device.name, fontSize = 16.sp)
                 }
             }
-            Spacer(modifier = Modifier.height(40.dp))
         }
-
+        Spacer(modifier = Modifier.height(40.dp))
     }
 }

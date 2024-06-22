@@ -1,9 +1,7 @@
 package hci_tp3.smart_penguin.ui.navigation
 
-import android.util.Log
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,8 +11,6 @@ import hci_tp3.smart_penguin.ui.devices.DevicesScreen
 import hci_tp3.smart_penguin.ui.devices.blind.BlindScreen
 import hci_tp3.smart_penguin.ui.devices.lamp.LampScreen
 import hci_tp3.smart_penguin.ui.devices.DevicesScreenTablet
-import hci_tp3.smart_penguin.ui.devices.DevicesViewModel
-import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.routines.RoutinesScreen
 
 @Composable
@@ -28,9 +24,9 @@ fun AppNavGraph(
     ) {
         composable(AppDestinations.DEVICES.route) {
             if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT) {
-                DevicesScreen()
+                DevicesScreen(onNavigateDestination = {route -> navController.navigate(route)})
             } else {
-                DevicesScreenTablet()
+                DevicesScreenTablet(onNavigateDestination = {route -> navController.navigate(route)})
             }
         }
         composable(AppDestinations.ROUTINES.route) {
