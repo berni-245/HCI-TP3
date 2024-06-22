@@ -16,10 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.ColorPickerController
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
@@ -29,21 +27,24 @@ import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 
 @Composable
-fun LampScreen( onNavigateDestination: (String) -> Unit,
-    lampViewModel: LampViewModel = viewModel(factory = getViewModelFactory())
+fun LampScreen(
+    lampViewModel: LampViewModel = viewModel(factory = getViewModelFactory()),
+    onNavigateDestination: (String) -> Unit,
 ) {
     val uiLampUiState by lampViewModel.uiState.collectAsState()
-    var checked by remember { mutableStateOf(false)}
+    var checked by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        if(checked){
-        Text(
-            text =stringResource(id = R.string.execute_turn_off)
-        ) } else {
-        Text(
-            text = stringResource(id = R.string.execute_turn_on)
-        ) }
+        if (checked) {
+            Text(
+                text = stringResource(id = R.string.execute_turn_off)
+            )
+        } else {
+            Text(
+                text = stringResource(id = R.string.execute_turn_on)
+            )
+        }
         Switch(
             checked = uiLampUiState.currentDevice?.status == Status.ON,
             onCheckedChange = {
@@ -73,11 +74,12 @@ fun LampScreen( onNavigateDestination: (String) -> Unit,
         ColorPickerController().setDebounceDuration(10L)
         HsvColorPicker(modifier = Modifier
             .fillMaxWidth()
-            .height(450.dp), controller = ColorPickerController(), onColorChanged = {
-            colorEnvelope: ColorEnvelope -> lampViewModel.setColor(colorEnvelope.hexCode)
-        })
+            .height(450.dp),
+            controller = ColorPickerController(),
+            onColorChanged = { colorEnvelope: ColorEnvelope ->
+                lampViewModel.setColor(colorEnvelope.hexCode)
+            })
     }
-    val navController = rememberNavController()
     Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
         Text(stringResource(id = R.string.close_blind_action))
     }
