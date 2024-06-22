@@ -1,14 +1,14 @@
 package hci_tp3.smart_penguin.ui.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,14 +19,16 @@ import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 @Composable
 fun AppBar(modifier: Modifier = Modifier) {
 
-    TopAppBar(
+    CenterAlignedTopAppBar(
         navigationIcon = {},
         title = {
 
                 Image(
                     painter =   painterResource(id = R.drawable.penguin),
                     contentDescription = "Logo",
-                    modifier = Modifier.fillMaxSize().padding(top = 10.dp, bottom = 10.dp)
+                    modifier = Modifier
+                        .width(LocalConfiguration.current.screenWidthDp.dp / 3)
+
 
                 )
 
