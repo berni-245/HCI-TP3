@@ -17,14 +17,11 @@ import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.state.VacuumMode
 import hci_tp3.smart_penguin.model.state.VacuumStatus
 import hci_tp3.smart_penguin.ui.getViewModelFactory
-import hci_tp3.smart_penguin.ui.navigation.AppDestinations
-import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VacuumScreen(
-    viewModel: VacuumViewModel = viewModel(factory = getViewModelFactory()),
-    onNavigateDestination: (String) -> Unit
+    viewModel: VacuumViewModel = viewModel(factory = getViewModelFactory())
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var expanded by remember { mutableStateOf(false) }

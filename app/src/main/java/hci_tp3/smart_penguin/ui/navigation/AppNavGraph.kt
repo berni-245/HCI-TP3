@@ -35,16 +35,16 @@ fun AppNavGraph(
             RoutinesScreen()
         }
         composable(AppDestinations.LAMP.route){
-            LampScreen(onNavigateDestination = {route -> navController.navigate(route)})
+            LampScreen()
         }
         composable(AppDestinations.AC.route){
-            AcScreen(onNavigateDestination = {route -> navController.navigate(route)})
+            AcScreen()
         }
         composable(AppDestinations.VACUUM.route){
-            VacuumScreen(onNavigateDestination = {route -> navController.navigate(route)})
+            VacuumScreen()
         }
         composable(AppDestinations.BLIND.route) {
-            BlindScreen(onNavigateDestination = {route -> navController.navigate(route)})
+            BlindScreen()
         }
     }
 }
