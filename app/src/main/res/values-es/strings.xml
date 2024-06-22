@@ -59,4 +59,9 @@
     <string name="turn_off_lamp_action">Apagar</string>
     <string name="vacuum_notifications_channel">Notificaciones de la Aspiradora</string>
     <string name="vacuum_notification_channel_desc">Reciba notificaciones cuando su aspiradora este funcionando con poca bateria</string>
+    <string name="Room">Sala</string>
+    <string name="in_base">En base</string>
+    <string name="go_to_base">Ir a base</string>
+    <string name="battery">"Batería: "</string>
+    <string name="low_battery">Batería baja…</string>
 </resources>

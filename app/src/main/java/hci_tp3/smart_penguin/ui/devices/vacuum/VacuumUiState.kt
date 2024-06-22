@@ -13,3 +13,4 @@ data class VacuumUiState(
 )
 
 val VacuumUiState.canExecuteAction: Boolean get() = currentDevice != null && !loading
+val VacuumUiState.isThereBatteryLeft: Boolean get() = currentDevice?.batteryLevel!! >= 5

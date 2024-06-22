@@ -13,26 +13,27 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.state.VacuumMode
+import hci_tp3.smart_penguin.model.state.VacuumStatus
 import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VacuumScreen(
-//    viewModel: VacuumViewModel = viewModel(factory = getViewModelFactory()),
-//    vacuumMode: VacuumMode
+    viewModel: VacuumViewModel = viewModel(factory = getViewModelFactory())
 ) {
-//    val uiState by viewModel.uiState.collectAsState()
-    var isPlaying by remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsState()
+//    var isPlaying by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
-    var selectedRoom by remember { mutableStateOf("Living Room") }
-    val rooms = listOf("Living Room", "Bedroom", "Kitchen", "Bathroom")
+//    val rooms = listOf("Living Room", "Bedroom", "Kitchen", "Bathroom")
 
     Column(
         modifier = Modifier
@@ -44,22 +45,35 @@ fun VacuumScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Aspiradora de Tobi", fontSize = 22.sp, style = MaterialTheme.typography.headlineMedium, modifier = Modifier)
+            Text(text = uiState.currentDevice!!.name,
+                fontSize = 22.sp,
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Control buttons
-        Button(onClick = { isPlaying = !isPlaying }) {
-            Icon(if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow, contentDescription = if (isPlaying) "Pause" else "Play")
+        Button(
+            onClick = {
+                        if(uiState.currentDevice?.status == VacuumStatus.ACTIVE) viewModel.pause()
+                        else viewModel.start()
+                      },
+            enabled = uiState.isThereBatteryLeft)
+        {
+            Icon(
+                if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) Icons.Default.Pause
+                else Icons.Default.PlayArrow,
+                contentDescription = if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) "Pause" else "Play"
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         SingleChoiceSegmentedCard(
             choices = listOf(VacuumMode.VACUUM.getString(), VacuumMode.MOP.getString()),
-            selectedChoice = VacuumMode.VACUUM.getString(),
-            onChoiceSelected = {}
+            selectedChoice = uiState.currentDevice!!.mode.getString(),
+            onChoiceSelected = { /* TODO: change mode */}
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -70,10 +84,12 @@ fun VacuumScreen(
             onExpandedChange = { expanded = !expanded }
         ) {
             TextField(
-                value = selectedRoom,
-                onValueChange = {},
+                value = uiState.currentDevice!!.room!!.name,
+                onValueChange = {
+                },
                 readOnly = true,
-                label = { Text("Sala") },
+                enabled = uiState.isThereBatteryLeft,
+                label = { Text(stringResource(R.string.Room)) },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -84,12 +100,11 @@ fun VacuumScreen(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                rooms.forEach { room ->
+                uiState.rooms.forEach { room ->
                     DropdownMenuItem(
-                        text = { Text(text = room) },
+                        text = { Text(text = room.name) },
                         onClick = {
-                            selectedRoom = room
-                            expanded = false
+                            viewModel.setLocation(room.id!!)
                         }
                     )
                 }
@@ -99,12 +114,27 @@ fun VacuumScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Base button
-        Button(
-            onClick = { /* Send to base action */ },
-            enabled = true
+        ElevatedCard(
+            onClick = { viewModel.dock() },
+            modifier = Modifier
         ) {
-            Text(text = "EN BASE")
+            Box(
+                modifier = Modifier.padding(12.dp)
+            ) {
+                if(uiState.currentDevice!!.status == VacuumStatus.DOCKED)
+                    Text(text = stringResource(R.string.in_base))
+                else
+                    Text(text = stringResource(R.string.go_to_base))
+            }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = stringResource(R.string.battery) + uiState.currentDevice!!.batteryLevel.toString() + "%")
+        if (! uiState.isThereBatteryLeft) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(stringResource(R.string.low_battery))
+        }
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -136,11 +166,10 @@ fun SingleChoiceSegmentedCard(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(12.dp)
                 ) {
                     Text(
                         text = choice,
-                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
             }

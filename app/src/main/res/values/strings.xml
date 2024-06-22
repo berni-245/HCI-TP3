@@ -59,4 +59,9 @@
     <string name="turn_off_lamp_action">Turn off</string>
     <string name="vacuum_notifications_channel">Vacuum Notifications</string>
     <string name="vacuum_notification_channel_desc">Receive notifications on your device when your vacuum is running low on battery</string>
+    <string name="Room">Room</string>
+    <string name="in_base">In base</string>
+    <string name="go_to_base">Go to base</string>
+    <string name="battery">"Battery: "</string>
+    <string name="low_battery">Low battery…</string>
 </resources>
