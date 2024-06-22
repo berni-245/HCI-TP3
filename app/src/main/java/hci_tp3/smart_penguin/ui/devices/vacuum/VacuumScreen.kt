@@ -1,21 +1,15 @@
 package hci_tp3.smart_penguin.ui.devices.vacuum
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,16 +29,7 @@ fun VacuumScreen(
     val uiState by viewModel.uiState.collectAsState()
     var expanded by remember { mutableStateOf(false) }
 
-    if (uiState.currentDevice == null) {
-        // Mostrar un indicador de carga mientras los datos se están obteniendo
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-        ) {
-            CircularProgressIndicator()
-        }
-    } else {
+    uiState.currentDevice?.let { currentDevice ->
         Column(
             modifier = Modifier
                 .padding(16.dp),
@@ -55,8 +40,9 @@ fun VacuumScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = uiState.currentDevice!!.name,
+                    text = currentDevice.name,
                     fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
                 )
             }
@@ -66,15 +52,15 @@ fun VacuumScreen(
             // Control buttons
             Button(
                 onClick = {
-                    if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) viewModel.pause()
+                    if (currentDevice.status == VacuumStatus.ACTIVE) viewModel.pause()
                     else viewModel.start()
                 },
                 enabled = uiState.isThereBatteryLeft
             ) {
                 Icon(
-                    if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) Icons.Default.Pause
+                    if (currentDevice.status == VacuumStatus.ACTIVE) Icons.Default.Pause
                     else Icons.Default.PlayArrow,
-                    contentDescription = if (uiState.currentDevice?.status == VacuumStatus.ACTIVE) "Pause" else "Play"
+                    contentDescription = if (currentDevice.status == VacuumStatus.ACTIVE) "Pause" else "Play"
                 )
             }
 
@@ -82,7 +68,7 @@ fun VacuumScreen(
 
             SingleChoiceSegmentedCard(
                 choices = listOf(VacuumMode.VACUUM.getString(), VacuumMode.MOP.getString()),
-                selectedChoice = uiState.currentDevice!!.mode.getString(),
+                selectedChoice = currentDevice.mode.getString(),
                 onChoiceSelected = { /* TODO: change mode */}
             )
 
@@ -94,9 +80,8 @@ fun VacuumScreen(
                 onExpandedChange = { expanded = !expanded }
             ) {
                 TextField(
-                    value = uiState.currentDevice!!.room?.name ?: "aaa",
-                    onValueChange = {
-                    },
+                    value = currentDevice.room?.name ?: stringResource(R.string.no_room_asigned),
+                    onValueChange = { },
                     readOnly = true,
                     enabled = uiState.isThereBatteryLeft,
                     label = { Text(stringResource(R.string.Room)) },
@@ -126,12 +111,13 @@ fun VacuumScreen(
             // Base button
             ElevatedCard(
                 onClick = { viewModel.dock() },
-                modifier = Modifier.size(64.dp) // Adjust size as needed
+                modifier = Modifier
+
             ) {
                 Box(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.padding(12.dp)
                 ) {
-                    if (uiState.currentDevice!!.status == VacuumStatus.DOCKED)
+                    if (currentDevice.status == VacuumStatus.DOCKED)
                         Text(text = stringResource(R.string.in_base))
                     else
                         Text(text = stringResource(R.string.go_to_base))
@@ -139,18 +125,22 @@ fun VacuumScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(text = stringResource(R.string.battery) + uiState.currentDevice!!.batteryLevel.toString() + "%")
+            Text(text = stringResource(R.string.battery) + currentDevice.batteryLevel.toString() + "%")
             if (!uiState.isThereBatteryLeft) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(stringResource(R.string.low_battery))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Close button
-//            Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
-//                Text(text = stringResource(R.string.close_blind_action))
-//            }
+        }
+    } ?: run {
+        // Mostrar un indicador de carga mientras los datos se están obteniendo
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        ) {
+            CircularProgressIndicator()
         }
     }
 }
@@ -168,7 +158,6 @@ fun SingleChoiceSegmentedCard(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         choices.forEach { choice ->
-            val isSelected = selectedChoice == choice
             ElevatedCard(
                 onClick = { onChoiceSelected(choice) },
                 modifier = Modifier.weight(1f)
