@@ -8,7 +8,7 @@ import android.util.Log
 class BootCompletedReciever : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action == Intent.ACTION_BOOT_COMPLETED){
-            Log.d("BootCompletedReciever","recieved")
+            Log.d("BootCompletedReciever","received boot completed on SmartPenguin!")
         }
     }
 }

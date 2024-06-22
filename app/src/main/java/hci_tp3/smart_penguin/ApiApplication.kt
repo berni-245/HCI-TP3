@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.SystemClock
+import android.util.Log
 import hci_tp3.smart_penguin.notification.NotificationEvaluator
 import hci_tp3.smart_penguin.remote.DeviceRemoteDataSource
 import hci_tp3.smart_penguin.remote.RoomRemoteDataSource
@@ -25,6 +26,7 @@ class ApiApplication  : Application() {
         createNotificationChannel()
         collectServerEvents()
     }
+
 
     private fun createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -59,8 +61,10 @@ class ApiApplication  : Application() {
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             SystemClock.currentThreadTimeMillis(),
-            60000,pendingIntent
+            60000,
+            pendingIntent
         )
+        Log.d("alarma","set alarm for notifications on smartPenguin")
 
     }
     private val roomRemoteDataSource: RoomRemoteDataSource

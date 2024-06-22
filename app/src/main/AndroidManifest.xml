@@ -29,7 +29,7 @@
         <receiver
             android:name=".notification.NotificationEvaluator"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="false"/>
 
         <activity
             android:name=".MainActivity"
