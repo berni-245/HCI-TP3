@@ -59,7 +59,7 @@ class AcViewModel (
         { state, _ -> state }
     )
 
-    fun setFunSpeed(speed: String) = runOnViewModelScope(
+    fun setFanSpeed(speed: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_FAN_SPEED_ACTION, arrayOf(speed)) },
         { state, _ -> state }
     )
