@@ -66,5 +66,6 @@
     <string name="low_battery">Batería baja…</string>
     <string name="low_battery_vacuum_notification_title">Su aspiradora se esta quedando sin bateria</string>
     <string name="no_room_asigned">Habitación no asignada</string>
+    <string name="no_room_linked">No hay habitación vinculada…</string>
     <string name="current_routine">Rutina Actual</string>
 </resources>

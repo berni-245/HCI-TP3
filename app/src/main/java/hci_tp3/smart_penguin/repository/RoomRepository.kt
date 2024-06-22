@@ -17,7 +17,7 @@ class RoomRepository(
         }
     }
 
-    suspend fun getRooms(refresh: Boolean = false): List<Room> {
+    suspend fun getRooms(refresh: Boolean = true): List<Room> {
         if (refresh || rooms.isEmpty()) {
             val result = remoteDataSource.getRooms()
             updateCache(result.map { it.asModel() })

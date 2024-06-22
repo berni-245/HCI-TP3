@@ -66,5 +66,6 @@
     <string name="low_battery">Low battery…</string>
     <string name="low_battery_vacuum_notification_title">Your vacuum is running low on battery</string>
     <string name="no_room_asigned">No room asigned</string>
+    <string name="no_room_linked">No room linked to device…</string>
     <string name="current_routine">Current Routine</string>
 </resources>

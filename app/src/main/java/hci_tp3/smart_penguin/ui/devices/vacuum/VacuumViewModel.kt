@@ -25,6 +25,7 @@ class VacuumViewModel (
     val uiState = _uiState.asStateFlow()
 
     init {
+        getRooms()
         collectOnViewModelScope(
             repository.currentDevice
         ) { state, response -> state.copy(currentDevice = response as Vacuum?)}
