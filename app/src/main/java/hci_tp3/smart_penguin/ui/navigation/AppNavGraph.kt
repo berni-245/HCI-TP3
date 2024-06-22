@@ -11,6 +11,7 @@ import hci_tp3.smart_penguin.ui.devices.DevicesScreen
 import hci_tp3.smart_penguin.ui.devices.blind.BlindScreen
 import hci_tp3.smart_penguin.ui.devices.lamp.LampScreen
 import hci_tp3.smart_penguin.ui.devices.DevicesScreenTablet
+import hci_tp3.smart_penguin.ui.devices.vacuum.VacuumScreen
 import hci_tp3.smart_penguin.ui.routines.RoutinesScreen
 
 @Composable
@@ -39,7 +40,7 @@ fun AppNavGraph(
             //TODO: Add ACScreen()
         }
         composable(AppDestinations.VACUUM.route){
-            //TODO: Add VacuumScreen()
+            VacuumScreen(onNavigateDestination = {route -> navController.navigate(route)})
         }
         composable(AppDestinations.BLIND.route) {
             BlindScreen()

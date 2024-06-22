@@ -23,22 +23,22 @@ import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.state.VacuumMode
 import hci_tp3.smart_penguin.model.state.VacuumStatus
 import hci_tp3.smart_penguin.ui.getViewModelFactory
+import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VacuumScreen(
-    viewModel: VacuumViewModel = viewModel(factory = getViewModelFactory())
+    viewModel: VacuumViewModel = viewModel(factory = getViewModelFactory()),
+    onNavigateDestination: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-//    var isPlaying by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
-//    val rooms = listOf("Living Room", "Bedroom", "Kitchen", "Bathroom")
+
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         // Header with title and icons
         Row(
@@ -139,8 +139,8 @@ fun VacuumScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // Close button
-        Button(onClick = { /* Close action */ }) {
-            Text(text = "CERRAR")
+        Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
+            Text(text = stringResource(R.string.close_blind_action))
         }
     }
 }
@@ -174,13 +174,5 @@ fun SingleChoiceSegmentedCard(
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun VacuumScreenPreview() {
-    HCITP3Theme {
-        VacuumScreen()
     }
 }
