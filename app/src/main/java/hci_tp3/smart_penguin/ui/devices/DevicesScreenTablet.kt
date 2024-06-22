@@ -195,7 +195,12 @@ fun DeviceSectionTablet(
 }
 
 @Composable
-fun DeviceItem(viewModel: DevicesViewModel, device: Device, sizeMultiplier: Float, onNavigateDestination: (String) -> Unit) {
+fun DeviceItem(
+    viewModel: DevicesViewModel,
+    device: Device,
+    sizeMultiplier: Float,
+    onNavigateDestination: (String) -> Unit
+) {
     Box(
         modifier = Modifier
             .shadow(
@@ -208,7 +213,12 @@ fun DeviceItem(viewModel: DevicesViewModel, device: Device, sizeMultiplier: Floa
             .padding(10.dp)
             .clickable {
                 viewModel.setDevice(device)
-                onNavigateDestination(AppDestinations.LAMP.route)
+                when (device.type) {
+                    DeviceType.AC -> onNavigateDestination(AppDestinations.AC.route)
+                    DeviceType.LAMP -> onNavigateDestination(AppDestinations.LAMP.route)
+                    DeviceType.BLIND -> onNavigateDestination(AppDestinations.BLIND.route)
+                    DeviceType.VACUUM -> onNavigateDestination(AppDestinations.VACUUM.route)
+                }
             },
         contentAlignment = Alignment.TopStart, // Align content to the top start
     ) {
