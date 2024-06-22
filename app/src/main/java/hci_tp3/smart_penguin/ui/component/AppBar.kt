@@ -1,6 +1,7 @@
 package hci_tp3.smart_penguin.ui.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,16 +23,11 @@ fun AppBar(modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
         navigationIcon = {},
         title = {
-
-                Image(
-                    painter =   painterResource(id = R.drawable.penguin),
-                    contentDescription = "Logo",
-                    modifier = Modifier
-                        .width(LocalConfiguration.current.screenWidthDp.dp / 3)
-
-
-                )
-
+            Image(
+                painter = painterResource(id = R.drawable.penguin),
+                contentDescription = "Logo",
+                modifier = Modifier.height(50.dp)
+            )
         },
         colors = topAppBarColors(
             containerColor = colorScheme.primary,

@@ -42,51 +42,53 @@ fun BlindScreen(
             CircularProgressIndicator()
         }
     } else {
-    Column(
-        modifier = Modifier.fillMaxWidth().padding(10.dp)
-    ) {
-        Text(
-            text = uiBlindUiState.currentDevice!!.name,
-            fontSize = 22.sp,
+        Column(
             modifier = Modifier
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        var checked by remember { mutableStateOf(uiBlindUiState.currentDevice?.status == BlindStatus.CLOSED) }
-        if (checked) {
+                .fillMaxWidth()
+                .padding(10.dp)
+        ) {
             Text(
-                text = stringResource(id = R.string.open_blinds_action)
+                text = uiBlindUiState.currentDevice!!.name,
+                fontSize = 22.sp,
+                modifier = Modifier
             )
-        } else {
+            Spacer(modifier = Modifier.height(16.dp))
+            var checked by remember { mutableStateOf(uiBlindUiState.currentDevice?.status == BlindStatus.CLOSED) }
+            if (checked) {
+                Text(
+                    text = stringResource(id = R.string.open_blinds_action)
+                )
+            } else {
+                Text(
+                    text = stringResource(id = R.string.close_blind_action)
+                )
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            Switch(
+                checked = checked,
+                onCheckedChange = {
+                    when (uiBlindUiState.currentDevice?.status) {
+                        BlindStatus.CLOSED -> blindViewModel.open()
+                        BlindStatus.OPENED -> blindViewModel.close()
+                        else -> {}
+                    }
+                    checked = !checked
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(id = R.string.close_blind_action)
+                text = stringResource(id = R.string.set_level_blind_action)
+            )
+            var sliderPosition by remember { mutableIntStateOf(uiBlindUiState.currentDevice!!.level) }
+            Spacer(modifier = Modifier.height(6.dp))
+            Slider(
+                value = sliderPosition.toFloat(),
+                onValueChange = {
+                    sliderPosition = it.toInt()
+                    blindViewModel.setLevel(sliderPosition)
+                },
+                valueRange = 1f..100f
             )
         }
-        Spacer(modifier = Modifier.height(6.dp))
-        Switch(
-            checked = checked,
-            onCheckedChange = {
-                when (uiBlindUiState.currentDevice?.status) {
-                    BlindStatus.CLOSED -> blindViewModel.open()
-                    BlindStatus.OPENED -> blindViewModel.close()
-                    else -> {}
-                }
-                checked = !checked
-            }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = stringResource(id = R.string.set_level_blind_action)
-        )
-        var sliderPosition by remember { mutableIntStateOf(uiBlindUiState.currentDevice!!.level) }
-        Spacer(modifier = Modifier.height(6.dp))
-        Slider(
-            value = sliderPosition.toFloat(),
-            onValueChange = {
-                sliderPosition = it.toInt()
-                blindViewModel.setLevel(sliderPosition)
-            },
-            valueRange = 1f..100f
-        )
-    }
     }
 }
