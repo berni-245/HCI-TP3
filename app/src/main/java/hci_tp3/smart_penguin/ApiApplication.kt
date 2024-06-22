@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.SystemClock
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import hci_tp3.smart_penguin.notification.NotificationEvaluator
 import hci_tp3.smart_penguin.remote.DeviceRemoteDataSource
 import hci_tp3.smart_penguin.remote.RoomRemoteDataSource
@@ -41,6 +42,14 @@ class ApiApplication  : Application() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var builder = NotificationCompat.Builder(this, VACUUM_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_vacuum)
+            .setContentTitle("Prueba")
+            .setContentText("notificacion de prueba")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
     }
 
     private fun collectServerEvents(){

@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.accompanist.flowlayout)
     implementation(libs.colorpicker.compose)
     implementation(libs.androidx.adaptive.android)
+    implementation(libs.accompanist.permissions)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

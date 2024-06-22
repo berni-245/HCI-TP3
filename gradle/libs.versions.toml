@@ -17,6 +17,8 @@ loggingInterceptor = "4.12.0"
 navigationRuntimeKtx = "2.7.7"
 navigationCompose = "2.7.7"
 adaptiveAndroid = "1.0.0-beta03"
+accompanistPermissions = "0.34.0"
+accompanistPermissionsVersion = "0.35.1-alpha"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanistFlowlayout" }
@@ -45,8 +47,10 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converte
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-adaptive-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-android", version.ref = "adaptiveAndroid" }
+accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanistPermissionsVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+accompanist-permissions = { id = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 
