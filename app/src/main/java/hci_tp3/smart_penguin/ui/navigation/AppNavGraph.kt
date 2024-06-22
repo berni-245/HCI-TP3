@@ -1,22 +1,37 @@
 package hci_tp3.smart_penguin.ui.navigation
 
+import android.util.Log
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.window.core.layout.WindowSizeClass
+import androidx.window.core.layout.WindowWidthSizeClass
 import hci_tp3.smart_penguin.ui.devices.DevicesScreen
 import hci_tp3.smart_penguin.ui.devices.blind.BlindScreen
 import hci_tp3.smart_penguin.ui.devices.lamp.LampScreen
+import hci_tp3.smart_penguin.ui.devices.DevicesScreenTablet
+import hci_tp3.smart_penguin.ui.devices.DevicesViewModel
+import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.routines.RoutinesScreen
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
+fun AppNavGraph(
+    navController: NavHostController,
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
+) {
     NavHost(
         navController = navController,
-        startDestination = AppDestinations.DEVICES.route
+        startDestination = AppDestinations.DEVICES.route,
     ) {
         composable(AppDestinations.DEVICES.route) {
-            DevicesScreen()
+            if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT) {
+                DevicesScreen()
+            } else {
+                DevicesScreenTablet()
+            }
         }
         composable(AppDestinations.ROUTINES.route) {
             RoutinesScreen()
