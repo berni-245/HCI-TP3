@@ -52,4 +52,6 @@
     <string name="dock_vacuum_action">Dock</string>
     <string name="turn_on_lamp_action">Turn on</string>
     <string name="turn_off_lamp_action">Turn off</string>
+    <string name="vacuum_notifications_channel">Vacuum Notifications</string>
+    <string name="vacuum_notification_channel_desc">Receive notifications on your device when your vacuum is running low on battery</string>
 </resources>

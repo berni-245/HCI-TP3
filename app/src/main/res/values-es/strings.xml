@@ -52,4 +52,6 @@
     <string name="dock_vacuum_action">Regresar a base carga</string>
     <string name="turn_on_lamp_action">Encender</string>
     <string name="turn_off_lamp_action">Apagar</string>
+    <string name="vacuum_notifications_channel">Notificaciones de la Aspiradora</string>
+    <string name="vacuum_notification_channel_desc">Reciba notificaciones cuando su aspiradora este funcionando con poca bateria</string>
 </resources>
