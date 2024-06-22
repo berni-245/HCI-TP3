@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Error
+import hci_tp3.smart_penguin.model.Routine
 import hci_tp3.smart_penguin.repository.RoutineRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+var currentRoutine: Routine? = null
 
 class RoutinesViewModel(
     private val repository: RoutineRepository
@@ -21,26 +24,24 @@ class RoutinesViewModel(
         getRoutines(true)
     }
 
-    fun getRoutines(refresh: Boolean = true) = runOnViewModelScope(
-        { repository.getRoutines(refresh) },
-        { state, response -> state.copy(routines = response) }
-    )
+    fun getRoutines(refresh: Boolean = true) =
+        runOnViewModelScope({ repository.getRoutines(refresh) },
+            { state, response -> state.copy(routines = response) })
 
-    fun getRoutine(routineId: String) = runOnViewModelScope(
-            { repository.getRoutine(routineId) },
-            { state, response -> state.copy(currentRoutine = response) }
-        )
+    fun setCurrentRoutine(routine: Routine) {
+        currentRoutine = routine
+    }
+    fun getCurrentRoutine(): Routine? {
+        return currentRoutine
+    }
 
 
-    fun executeRoutine(routineId: String = uiState.value.currentRoutine?.id!!) = runOnViewModelScope(
-            { repository.executeRoutine(routineId) },
-            { state, _ -> state }
-        )
+    fun executeRoutine(routineId: String = currentRoutine?.id!!) =
+        runOnViewModelScope({ repository.executeRoutine(routineId) }, { state, _ -> state })
 
 
     private fun <R> runOnViewModelScope(
-        block: suspend () -> R,
-        updateState: (RoutinesUiState, R) -> RoutinesUiState
+        block: suspend () -> R, updateState: (RoutinesUiState, R) -> RoutinesUiState
     ): Job = viewModelScope.launch {
         _uiState.update { it.copy(loading = true, error = null) }
         runCatching {

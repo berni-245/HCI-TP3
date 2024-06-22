@@ -16,6 +16,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun RoutinesScreen(
+    onNavigateDestination: (String) -> Unit,
     viewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -27,26 +28,24 @@ fun RoutinesScreen(
         } else {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                //contentPadding = PaddingValuesz,
             ) {
-
-                items(items = routineList) { item ->
-                    RoutineCard(routineName = item.name, routineDescription = item.desc!!)
+                items(items = routineList) { routine ->
+                    RoutineCard(routine, onNavigateDestination)
                 }
             }
         }
     }
 }
 
-@Preview( showBackground = true,
-    device = "id:pixel_3"
-)
-@Composable
-fun RoutinesScreenPreviewMobile(){
-    RoutinesScreen()
-}
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_tablet")
-@Composable
-fun RoutinesScreenPreviewTablet(){
-    RoutinesScreen()
-}
+//@Preview( showBackground = true,
+//    device = "id:pixel_3"
+//)
+//@Composable
+//fun RoutinesScreenPreviewMobile(){
+//    RoutinesScreen()
+//}
+//@Preview(showBackground = true, showSystemUi = true, device = "id:pixel_tablet")
+//@Composable
+//fun RoutinesScreenPreviewTablet(){
+//    RoutinesScreen()
+//}

@@ -21,44 +21,39 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.Ac
 import hci_tp3.smart_penguin.model.Action
 import hci_tp3.smart_penguin.model.Blind
-import hci_tp3.smart_penguin.model.DeviceForRoutine
 import hci_tp3.smart_penguin.model.DeviceType
 import hci_tp3.smart_penguin.model.Lamp
-import hci_tp3.smart_penguin.model.Routine
 import hci_tp3.smart_penguin.model.Vacuum
-import hci_tp3.smart_penguin.model.state.AcMode
-import hci_tp3.smart_penguin.model.state.BlindStatus
-import hci_tp3.smart_penguin.model.state.Status
-import hci_tp3.smart_penguin.model.state.VacuumMode
-import hci_tp3.smart_penguin.model.state.VacuumStatus
-import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
+import hci_tp3.smart_penguin.ui.getViewModelFactory
 
 
 @Composable
 fun RoutinesInfo(
-    routine: Routine
+    viewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
 ) {
+//    val routineState by viewModel.uiState.collectAsState()
+//    val routine = routineState.currentRoutine
+    val routine = viewModel.getCurrentRoutine()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = routine.name, style = MaterialTheme.typography.headlineLarge)
+        Text(text = routine?.name ?: "...", style = MaterialTheme.typography.headlineLarge)
         RoutinePlayButton {}
-        routine.actions.forEach { action ->
+        routine?.actions?.forEach { action ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(130.dp)
                     .padding(start = 16.dp, end = 16.dp, top = 10.dp)
             ) {
-
                 HandleDeviceType(action = action)
             }
 
@@ -95,19 +90,17 @@ fun PrintActionName(name: String) {
 
 @Composable
 fun BlindHandler(action: Action) {
-    Row (
+    Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(start = 10.dp)
     ) {
-        Icon(painter = painterResource(DeviceType.BLIND.icon) , contentDescription = "ac" )
+        Icon(painter = painterResource(DeviceType.BLIND.icon), contentDescription = "ac")
         PrintActionName(action.device.name)
     }
 
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
-
-
         when (action.actionName) {
             Blind.OPEN_ACTION -> {
                 Text(stringResource(R.string.open_blinds_action))
@@ -123,19 +116,17 @@ fun BlindHandler(action: Action) {
                 Text(text = action.params.first() + "%")
             }
         }
-
-
     }
 }
 
 
 @Composable
 fun LampHandler(action: Action) {
-    Row (
+    Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(start = 10.dp)
     ) {
-        Icon(painter = painterResource(DeviceType.LAMP.icon) , contentDescription = "ac" )
+        Icon(painter = painterResource(DeviceType.LAMP.icon), contentDescription = "ac")
         PrintActionName(action.device.name)
     }
 
@@ -143,8 +134,6 @@ fun LampHandler(action: Action) {
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
-
-
         when (action.actionName) {
             Lamp.SET_COLOR_ACTION -> {
                 Text(stringResource(R.string.set_color_lamp_action))
@@ -171,27 +160,23 @@ fun LampHandler(action: Action) {
             Lamp.TURN_OFF_ACTION -> {
                 Text(stringResource(R.string.turn_off_lamp_action))
             }
-
-
         }
     }
 }
 
 @Composable
 fun AcHandler(action: Action) {
-   Row (
-       verticalAlignment = Alignment.CenterVertically,
-       modifier = Modifier.padding(start = 10.dp)
-   ) {
-       Icon(painter = painterResource(DeviceType.AC.icon) , contentDescription = "ac" )
-       PrintActionName(action.device.name)
-   }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(start = 10.dp)
+    ) {
+        Icon(painter = painterResource(DeviceType.AC.icon), contentDescription = "ac")
+        PrintActionName(action.device.name)
+    }
 
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
-
-
         when (action.actionName) {
             Ac.TURN_ON_ACTION -> {
                 Text(stringResource(R.string.turn_on_lamp_action))
@@ -231,26 +216,21 @@ fun AcHandler(action: Action) {
                 Text(text = action.params.first() + "°")
             }
         }
-
-
     }
 }
 
 @Composable
 fun VacuumHandler(action: Action) {
-    Row (
+    Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(start = 10.dp)
     ) {
-        Icon(painter = painterResource(DeviceType.VACUUM.icon) , contentDescription = "ac" )
+        Icon(painter = painterResource(DeviceType.VACUUM.icon), contentDescription = "ac")
         PrintActionName(action.device.name)
     }
-
     Row(
         modifier = Modifier.padding(start = 30.dp)
     ) {
-
-
         when (action.actionName) {
             Vacuum.SET_MODE_ACTION -> {
                 Text(stringResource(R.string.set_mode_ac_vacuum_action))
@@ -276,64 +256,5 @@ fun VacuumHandler(action: Action) {
                 Text(text = action.params.first())
             }
         }
-
-
-    }
-}
-
-
-@Composable
-fun RoutineInfoScreen(
-    routine: Routine
-) {
-
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun RoutinesInfoPreview() {
-    HCITP3Theme {
-
-        var d1 = DeviceForRoutine(
-            "13",
-            "Lamparita",
-            DeviceType.LAMP
-        )
-        val d2 = DeviceForRoutine(id="22","Robocop",DeviceType.VACUUM)
-        val d3 = DeviceForRoutine(id="19","Cortina Cocina",DeviceType.BLIND)
-        val d4 = DeviceForRoutine(id="21","Aire Dormitorio",DeviceType.AC)
-
-        var a6 = Action(device = d3, actionName = "setLevel", params = listOf("15"), null)
-        var a7 = Action(device = d4, actionName = "setFanSpeed", params = listOf("100"), null)
-        var a8 = Action(device = d2, actionName = "setMode", params = listOf("Mop"), null)
-        var a9 = Action(device = d1, actionName = "setColor", params = listOf("768930"), null)
-        var actions = listOf(a6,a7,a8,a9)
-        var routine = Routine(id = "1234", name = "My Really Cool Routine", actions, null)
-        RoutinesInfo(routine = routine)
-    }
-}
-
-@Preview(showBackground = true, locale = "es")
-@Composable
-fun RoutinesInfoPreviewEs() {
-    HCITP3Theme {
-
-        var d1 = DeviceForRoutine(
-            "13",
-            "Lamparita",
-            DeviceType.LAMP
-        )
-        val d2 = DeviceForRoutine(id="22","Robocop",DeviceType.VACUUM)
-        val d3 = DeviceForRoutine(id="19","Cortina Cocina",DeviceType.BLIND)
-        val d4 = DeviceForRoutine(id="21","Aire Dormitorio",DeviceType.AC)
-
-        var a6 = Action(device = d3, actionName = "setLevel", params = listOf("15"), null)
-        var a7 = Action(device = d4, actionName = "setFanSpeed", params = listOf("100"), null)
-        var a8 = Action(device = d2, actionName = "setMode", params = listOf("Mop"), null)
-        var a9 = Action(device = d1, actionName = "setColor", params = listOf("FFF000"), null)
-        var actions = listOf(a6,a7,a8,a9)
-        var routine = Routine(id = "1234", name = "Mi Rutina", actions, null)
-        RoutinesInfo(routine = routine)
     }
 }

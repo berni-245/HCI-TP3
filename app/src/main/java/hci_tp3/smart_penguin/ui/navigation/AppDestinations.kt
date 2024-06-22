@@ -18,5 +18,6 @@ enum class AppDestinations(@StringRes val title: Int, val icon: ImageVector, val
     LAMP(R.string.lamps, Icons.Filled.Lightbulb, "lamp_screen"),
     AC(R.string.acs, Icons.Filled.AcUnit, "ac_screen"),
     VACUUM(R.string.vacuums, Icons.Filled.AdfScanner, "vacuum_screen"),
-    BLIND(R.string.blinds, Icons.Filled.Blinds,"blind_screen")
+    BLIND(R.string.blinds, Icons.Filled.Blinds,"blind_screen"),
+    CURRENT_ROUTINE(R.string.current_routine, Icons.Filled.Task, "current_routine_screen")
 }

@@ -13,19 +13,26 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import hci_tp3.smart_penguin.model.Routine
+import hci_tp3.smart_penguin.ui.getViewModelFactory
+import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 
 
 @Composable
 fun RoutineCard(
-  routineName : String,
-  routineDescription : String
-){
+    routine: Routine,
+    onNavigateDestination: (String) -> Unit,
+    viewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
+) {
     ElevatedCard(
-        onClick = { /*luego*/ },
+        onClick = {
+            viewModel.setCurrentRoutine(routine)
+            onNavigateDestination(AppDestinations.CURRENT_ROUTINE.route)
+        },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
@@ -40,38 +47,24 @@ fun RoutineCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
-                Text(text = routineName,
+                Text(
+                    text = routine.name,
                     modifier = Modifier
                         .padding(16.dp),
-                    textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
+                    textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall
+                )
 
-                Text(text = routineDescription,
+                Text(
+                    text = routine.desc!!,
                     modifier = Modifier
                         .padding(start = 16.dp),
                     textAlign = TextAlign.Center,
-                    )
+                )
             }
             RoutinePlayButton {
 
             }
         }
-
-    }
-
-}
-
-@Preview(showBackground = true, showSystemUi = true, device = "id:pixel")
-@Composable
-fun RoutineCardPreview(){
-    Column{
-    RoutineCard(routineName = "Berni's Routine", routineDescription = "Rutina de Berna para hacer cafe")
-        RoutineCard(routineName = "Berni's Routine", routineDescription = "Rutina de Berna para hacer cafe")
-
-        RoutineCard(routineName = "Berni's Routine", routineDescription = "Rutina de Berna para hacer cafe")
-
-        RoutineCard(routineName = "Berni's Routine", routineDescription = "Rutina de Berna para hacer cafe")
-
-        RoutineCard(routineName = "Berni's Routine", routineDescription = "Rutina de Berna para hacer cafe")
 
     }
 }
