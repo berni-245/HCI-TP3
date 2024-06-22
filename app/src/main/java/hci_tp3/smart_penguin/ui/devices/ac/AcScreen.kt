@@ -30,7 +30,8 @@ import hci_tp3.smart_penguin.ui.getViewModelFactory
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AcScreen(
-    acViewModel: AcViewModel = viewModel(factory = getViewModelFactory())
+    acViewModel: AcViewModel = viewModel(factory = getViewModelFactory()),
+    onNavigateDestination: (String) -> Unit
 ) {
     val uiAcUiState by acViewModel.uiState.collectAsState()
     var checked by remember { mutableStateOf(false) }

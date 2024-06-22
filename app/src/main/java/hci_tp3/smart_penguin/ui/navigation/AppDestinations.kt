@@ -16,7 +16,7 @@ enum class AppDestinations(@StringRes val title: Int, val icon: ImageVector, val
     DEVICES(R.string.Devices, Icons.Filled.CoffeeMaker, "devices_screen"),
     ROUTINES(R.string.Routines, Icons.Filled.Task, "routines_screen"),
     LAMP(R.string.lamps, Icons.Filled.Lightbulb, "lamp_screen"),
-    AC(R.string.acs, Icons.Filled.AcUnit, "dev_ac"),
+    AC(R.string.acs, Icons.Filled.AcUnit, "ac_screen"),
     VACUUM(R.string.vacuums, Icons.Filled.AdfScanner, "vacuum_screen"),
-    BLIND(R.string.blinds, Icons.Filled.Blinds,"dev_bln")
+    BLIND(R.string.blinds, Icons.Filled.Blinds,"blind_screen")
 }

@@ -24,7 +24,8 @@ import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 
 @Composable
 fun BlindScreen(
-    blindViewModel: BlindViewModel = viewModel(factory = getViewModelFactory())
+    blindViewModel: BlindViewModel = viewModel(factory = getViewModelFactory()),
+    onNavigateDestination: (String) -> Unit
 ) {
     val uiBlindUiState by blindViewModel.uiState.collectAsState()
     var checked by remember { mutableStateOf(false) }
