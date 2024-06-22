@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
@@ -28,7 +29,7 @@ import hci_tp3.smart_penguin.ui.getViewModelFactory
 import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 
 @Composable
-fun LampScreen(
+fun LampScreen( onNavigateDestination: (String) -> Unit,
     lampViewModel: LampViewModel = viewModel(factory = getViewModelFactory())
 ) {
     val uiLampUiState by lampViewModel.uiState.collectAsState()
@@ -77,7 +78,7 @@ fun LampScreen(
         })
     }
     val navController = rememberNavController()
-    Button(onClick = { navController.navigate(AppDestinations.DEVICES.route) }) {
+    Button(onClick = { onNavigateDestination(AppDestinations.DEVICES.route) }) {
         Text(stringResource(id = R.string.close_blind_action))
     }
 

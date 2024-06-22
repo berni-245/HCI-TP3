@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import hci_tp3.smart_penguin.ui.devices.DevicesScreen
+import hci_tp3.smart_penguin.ui.devices.blind.BlindScreen
 import hci_tp3.smart_penguin.ui.devices.lamp.LampScreen
 import hci_tp3.smart_penguin.ui.routines.RoutinesScreen
 
@@ -21,7 +22,7 @@ fun AppNavGraph(navController: NavHostController) {
             RoutinesScreen()
         }
         composable(AppDestinations.LAMP.route){
-            LampScreen()
+            LampScreen(onNavigateDestination = {route -> navController.navigate(route)})
         }
         composable(AppDestinations.AC.route){
             //TODO: Add ACScreen()
@@ -30,7 +31,7 @@ fun AppNavGraph(navController: NavHostController) {
             //TODO: Add VacuumScreen()
         }
         composable(AppDestinations.BLIND.route) {
-            //TODO: Add BlindScreen()
+            BlindScreen()
         }
     }
 }
