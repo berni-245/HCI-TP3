@@ -17,7 +17,6 @@ import hci_tp3.smart_penguin.ui.devices.ac.AcViewModel
 import hci_tp3.smart_penguin.ui.devices.blind.BlindViewModel
 import hci_tp3.smart_penguin.ui.devices.lamp.LampViewModel
 import hci_tp3.smart_penguin.ui.devices.vacuum.VacuumViewModel
-import hci_tp3.smart_penguin.ui.rooms.RoomsViewModel
 import hci_tp3.smart_penguin.ui.routines.RoutinesViewModel
 
 @Composable
@@ -49,9 +48,6 @@ class ViewModelFactory (
         handle: SavedStateHandle
     ) = with(modelClass) {
         when {
-            isAssignableFrom(RoomsViewModel::class.java) ->
-                RoomsViewModel(roomRepository)
-
             isAssignableFrom(DevicesViewModel::class.java) ->
                 DevicesViewModel(deviceRepository)
 
