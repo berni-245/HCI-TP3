@@ -290,7 +290,7 @@ class LampCard : DeviceCard<Lamp> {
                     brush = Brush.radialGradient(
                         colors = colors,
                         center = Offset(Float.POSITIVE_INFINITY, 0f),
-                        radius = 500f
+                        radius = 800f*sizeMultiplier
                     )
                 )
         )
