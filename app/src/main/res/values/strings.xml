@@ -66,4 +66,6 @@
     <string name="low_battery_vacuum_notification_text_start">Your vacuum</string>
     <string name="low_battery_vacuum_notification_text_end">is running out of battery.</string>
     <string name="dock_vacuum_from_notification_title">Vacuum is now charging</string>
+    <string name="noti_enable">Enable Notifications</string>
+    <string name="noti_disable">Disable Notifications</string>
 </resources>

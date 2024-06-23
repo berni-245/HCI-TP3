@@ -66,4 +66,6 @@
     <string name="low_battery_vacuum_notification_text_start">"Su aspiradora "</string>
     <string name="low_battery_vacuum_notification_text_end">"esta quedandose sin bateria. "</string>
     <string name="dock_vacuum_from_notification_title">La aspiradora esta cargando</string>
+    <string name="noti_enable">Habilitar Notificaciones</string>
+    <string name="noti_disable">Deshabilitar Notificaciones</string>
 </resources>
