@@ -41,6 +41,7 @@ fun RoutinesInfo(
 //    val routineState by viewModel.uiState.collectAsState()
 //    val routine = routineState.currentRoutine
     val routine = viewModel.getCurrentRoutine()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
@@ -55,7 +56,7 @@ fun RoutinesInfo(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(130.dp)
-                    .padding(start = 16.dp, end = 16.dp, top = 10.dp)
+                    .padding(start = 8.dp, end = 16.dp, top = 10.dp, bottom = 8.dp)
             ) {
                 HandleDeviceType(action = action)
             }

@@ -32,6 +32,15 @@ fun RoutineCard(
     if(name.length > 13){
         name = name.substring(0,13).plus("..")
     }
+    val hasDesc = routine.desc != null
+    var desc = routine.desc.toString()
+    if(hasDesc){
+       if(desc.length > 16){
+           desc = desc.substring(0,16).plus("..")
+       }
+    }
+
+
     ElevatedCard(
         onClick = {
             viewModel.setCurrentRoutine(routine)
@@ -57,14 +66,14 @@ fun RoutineCard(
                         .padding(16.dp),
                     textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall
                 )
-
+        if(hasDesc){
                 Text(
-                    text = routine.desc!!,
+                    text = desc,
                     modifier = Modifier
                         .padding(start = 16.dp),
                     textAlign = TextAlign.Center,
                 )
-            }
+            }}
             routine.id?.let { RoutinePlayButton (it,viewModel) }
         }
 
