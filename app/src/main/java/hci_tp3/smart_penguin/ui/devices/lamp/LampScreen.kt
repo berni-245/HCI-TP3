@@ -1,11 +1,16 @@
 package hci_tp3.smart_penguin.ui.devices.lamp
 
+import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
@@ -26,6 +31,7 @@ import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import hci_tp3.smart_penguin.R
+import hci_tp3.smart_penguin.hexToColor
 import hci_tp3.smart_penguin.model.state.Status
 import hci_tp3.smart_penguin.ui.getViewModelFactory
 import kotlin.math.roundToInt
@@ -45,15 +51,14 @@ fun LampScreen(
         ) {
             CircularProgressIndicator()
         }
-    }
-    else {
+    } else {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
             Text(
-                text = uiLampUiState.currentDevice!!.name,
+                text = uiLampUiState.currentDevice?.name ?: "...",
                 fontSize = 22.sp,
                 modifier = Modifier
             )
@@ -97,9 +102,14 @@ fun LampScreen(
             )
             Text(text = "$sliderPosition%")
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = stringResource(id = R.string.lamp_color)
-            )
+            Row {
+                Text(text = stringResource(id = R.string.lamp_color) + ": ")
+                Box(
+                    modifier = Modifier
+                        .size(25.dp)
+                        .background(hexToColor(uiLampUiState.currentDevice?.color ?: ""))
+                )
+            }
             Spacer(modifier = Modifier.height(6.dp))
             val controller = rememberColorPickerController()
             controller.setDebounceDuration(500L)
@@ -107,9 +117,15 @@ fun LampScreen(
             HsvColorPicker(modifier = Modifier
                 .fillMaxWidth()
                 .height(450.dp),
+                initialColor = hexToColor(uiLampUiState.currentDevice?.color ?: ""),
                 controller = controller,
                 onColorChanged = { colorEnvelope: ColorEnvelope ->
-                    lampViewModel.setColor(colorEnvelope.hexCode.substring(0,6))
+                    if (colorEnvelope.fromUser) {
+                        Log.d("Lamp color: ", colorEnvelope.hexCode)
+                        val colorString = colorEnvelope.hexCode.substring(2)
+                        lampViewModel.setColor(colorString)
+                        uiLampUiState.currentDevice?.color = colorString
+                    }
                 })
         }
     }

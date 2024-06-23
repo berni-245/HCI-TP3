@@ -7,7 +7,7 @@ class Lamp(
     name: String,
     val room: Room?,
     val status: Status,
-    val color: String,
+    var color: String,
     val brightness: Int
 ) : Device(id, name, DeviceType.LAMP) {
 
