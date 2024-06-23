@@ -30,6 +30,11 @@ fun VacuumScreen(
     var expanded by remember { mutableStateOf(false) }
 
     uiState.currentDevice?.let { currentDevice ->
+        var isRunning by remember { mutableStateOf(currentDevice.status == VacuumStatus.ACTIVE) }
+        var isDocked by remember { mutableStateOf(currentDevice.status == VacuumStatus.DOCKED) }
+        var selectedMode by remember { mutableStateOf(currentDevice.mode) }
+        var selectedLocation by remember { mutableStateOf(currentDevice.location) }
+
         LazyColumn(
             modifier = Modifier
                 .padding(16.dp),
@@ -53,15 +58,17 @@ fun VacuumScreen(
                 // Control buttons
                 Button(
                     onClick = {
-                        if (currentDevice.status == VacuumStatus.ACTIVE) viewModel.pause()
+                        isDocked = false
+                        if (isRunning) viewModel.pause()
                         else viewModel.start()
+                        isRunning = !isRunning
                     },
                     enabled = uiState.isThereBatteryLeft && uiState.isThereARoom
                 ) {
                     Icon(
-                        if (currentDevice.status == VacuumStatus.ACTIVE) Icons.Default.Pause
+                        if (isRunning) Icons.Default.Pause
                         else Icons.Default.PlayArrow,
-                        contentDescription = if (currentDevice.status == VacuumStatus.ACTIVE) "Pause" else "Play"
+                        contentDescription = if (isRunning) "Pause" else "Play"
                     )
                 }
 
@@ -69,9 +76,10 @@ fun VacuumScreen(
 
                 SingleChoiceSegmentedCard(
                     choices = listOf(VacuumMode.VACUUM, VacuumMode.MOP),
-                    selectedChoice = currentDevice.mode,
+                    selectedChoice = selectedMode,
                     onChoiceSelected = { mode ->
                         viewModel.setMode(mode)
+                        selectedMode = mode
                     }
                 )
 
@@ -79,15 +87,15 @@ fun VacuumScreen(
 
                 // Room selection dropdown
                 ExposedDropdownMenuBox(
-                    expanded = expanded && uiState.isThereARoom,
-                    onExpandedChange = { expanded = !expanded }
+                    expanded = expanded,
+                    onExpandedChange = { expanded = (!expanded) && uiState.isThereARoom && uiState.isThereBatteryLeft }
                 ) {
                     TextField(
-                        value = currentDevice.location?.name ?: stringResource(R.string.no_room_asigned),
+                        value = selectedLocation?.name ?: stringResource(R.string.no_room_asigned),
                         onValueChange = { },
                         readOnly = true,
-                        enabled = uiState.isThereARoom,
-                        label = { Text(stringResource(R.string.current_room)) },
+                        enabled = uiState.isThereARoom && uiState.isThereBatteryLeft,
+                        label = { Text(stringResource(R.string.current_location)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -95,7 +103,7 @@ fun VacuumScreen(
                             .menuAnchor()
                     )
                     ExposedDropdownMenu(
-                        expanded = expanded && uiState.isThereARoom,
+                        expanded = expanded,
                         onDismissRequest = { expanded = false }
                     ) {
                         uiState.rooms.forEach { room ->
@@ -104,6 +112,7 @@ fun VacuumScreen(
                                 onClick = {
                                     viewModel.setLocation(room.id!!)
                                     expanded = false
+                                    selectedLocation = room
                                 }
                             )
                         }
@@ -114,14 +123,18 @@ fun VacuumScreen(
 
                 // Base button
                 ElevatedCard(
-                    onClick = { viewModel.dock() },
+                    onClick = {
+                        isRunning = false
+                        isDocked = !isDocked
+                        viewModel.dock()
+                              },
                     modifier = Modifier,
                     enabled = uiState.isThereARoom
                 ) {
                     Box(
                         modifier = Modifier.padding(12.dp)
                     ) {
-                        if (currentDevice.status == VacuumStatus.DOCKED)
+                        if (isDocked)
                             Text(text = stringResource(R.string.in_base))
                         else
                             Text(text = stringResource(R.string.go_to_base))
