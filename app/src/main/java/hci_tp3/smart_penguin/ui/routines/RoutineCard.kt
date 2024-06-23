@@ -28,6 +28,10 @@ fun RoutineCard(
     onNavigateDestination: (String) -> Unit,
     viewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
 ) {
+    var name = routine.name
+    if(name.length > 13){
+        name = name.substring(0,13).plus("..")
+    }
     ElevatedCard(
         onClick = {
             viewModel.setCurrentRoutine(routine)
@@ -48,7 +52,7 @@ fun RoutineCard(
         ) {
             Column {
                 Text(
-                    text = routine.name,
+                    text = name,
                     modifier = Modifier
                         .padding(16.dp),
                     textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall
