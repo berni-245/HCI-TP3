@@ -69,5 +69,6 @@
     <string name="no_room_linked">No hay habitación base vinculada…</string>
     <string name="current_routine">Rutina Actual</string>
     <string name="low_battery_vacuum_notification_text_start">"Su aspiradora "</string>
-    <string name="low_battery_vacuum_notification_text_end">esta quedandose sin bateria. ¿Desea ponerla a cargar?</string>
+    <string name="low_battery_vacuum_notification_text_end">"esta quedandose sin bateria. "</string>
+    <string name="dock_vacuum_from_notification_title">La aspiradora esta cargando</string>
 </resources>

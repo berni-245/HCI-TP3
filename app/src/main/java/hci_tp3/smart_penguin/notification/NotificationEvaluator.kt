@@ -25,7 +25,7 @@ class NotificationEvaluator() : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
         Log.d("alarma","Recibi la alarma en NotificationEvaluator")
-        //notification(context,intent)
+       // notification(context,intent)
         val deviceRemoteDataSource = DeviceRemoteDataSource(RetrofitClient.deviceService)
         GlobalScope.launch(Dispatchers.IO) {
             deviceRemoteDataSource.devices.collect { list ->
@@ -60,6 +60,14 @@ class NotificationEvaluator() : BroadcastReceiver() {
         val notificationTextEnd = context.resources?.getString(R.string.low_battery_vacuum_notification_text_end)
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(context, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT or  PendingIntent.FLAG_IMMUTABLE)
+
+         val dockIntent = Intent(context, RecieveDockRequest::class.java).apply {
+             action = "dock"
+             putExtra("VACUUM_ID",vacuum.id)
+         }
+         val dockPendingIntent : PendingIntent = PendingIntent.getBroadcast(context,0,dockIntent,
+             PendingIntent.FLAG_IMMUTABLE)
+
         val builder = NotificationCompat.Builder(context, "vacuumChannel")
                 .setSmallIcon(R.drawable.ic_vacuum)
                 .setContentTitle(notificationTitle)
@@ -67,6 +75,7 @@ class NotificationEvaluator() : BroadcastReceiver() {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .addAction(R.drawable.ic_vacuum,"Send to Dock",dockPendingIntent)
 
 
 
