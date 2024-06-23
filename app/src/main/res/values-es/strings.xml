@@ -10,8 +10,8 @@
     <string name="delete_room">DELETE ROOM</string>
     <string name="current_room">Current room: %1$s</string>
     <string name="total_rooms">Total Rooms: %1$s</string>
-    <string name="execute_turn_on">Encender</string>
-    <string name="execute_turn_off">Apagar</string>
+    <string name="execute_turn_on">Apagado</string>
+    <string name="execute_turn_off">Prendido</string>
     <string name="current_device">Current device: %1$s</string>
     <string name="total_devices">Total Devices: %1$s</string>
     <string name="device_status">Status: %1$s</string>
@@ -59,13 +59,13 @@
     <string name="turn_off_lamp_action">Apagar</string>
     <string name="vacuum_notifications_channel">Notificaciones de la Aspiradora</string>
     <string name="vacuum_notification_channel_desc">Reciba notificaciones cuando su aspiradora este funcionando con poca bateria</string>
-    <string name="Room">Sala</string>
+    <string name="current_location">Ubicación actual</string>
     <string name="in_base">En base</string>
     <string name="go_to_base">Ir a base</string>
     <string name="battery">"Batería: "</string>
     <string name="low_battery">Batería baja…</string>
     <string name="low_battery_vacuum_notification_title">Su aspiradora se esta quedando sin bateria</string>
     <string name="no_room_asigned">Habitación no asignada</string>
-    <string name="no_room_linked">No hay habitación vinculada…</string>
+    <string name="no_room_linked">No hay habitación base vinculada…</string>
     <string name="current_routine">Rutina Actual</string>
 </resources>

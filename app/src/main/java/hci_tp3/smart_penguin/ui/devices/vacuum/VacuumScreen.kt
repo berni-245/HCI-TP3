@@ -1,5 +1,6 @@
 package hci_tp3.smart_penguin.ui.devices.vacuum
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -70,7 +71,7 @@ fun VacuumScreen(
                     choices = listOf(VacuumMode.VACUUM, VacuumMode.MOP),
                     selectedChoice = currentDevice.mode,
                     onChoiceSelected = { mode ->
-                        viewModel.setMode(if (mode == VacuumMode.VACUUM) VacuumMode.VACUUM else VacuumMode.MOP)
+                        viewModel.setMode(mode)
                     }
                 )
 
@@ -78,15 +79,15 @@ fun VacuumScreen(
 
                 // Room selection dropdown
                 ExposedDropdownMenuBox(
-                    expanded = expanded,
+                    expanded = expanded && uiState.isThereARoom,
                     onExpandedChange = { expanded = !expanded }
                 ) {
                     TextField(
-                        value = currentDevice.room?.name ?: stringResource(R.string.no_room_asigned),
+                        value = currentDevice.location?.name ?: stringResource(R.string.no_room_asigned),
                         onValueChange = { },
                         readOnly = true,
-                        enabled = uiState.isThereBatteryLeft && uiState.isThereARoom,
-                        label = { Text(stringResource(R.string.Room)) },
+                        enabled = uiState.isThereARoom,
+                        label = { Text(stringResource(R.string.current_room)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -114,7 +115,8 @@ fun VacuumScreen(
                 // Base button
                 ElevatedCard(
                     onClick = { viewModel.dock() },
-                    modifier = Modifier
+                    modifier = Modifier,
+                    enabled = uiState.isThereARoom
                 ) {
                     Box(
                         modifier = Modifier.padding(12.dp)
@@ -167,15 +169,18 @@ fun SingleChoiceSegmentedCard(
         choices.forEach { choice ->
             ElevatedCard(
                 onClick = { onChoiceSelected(choice) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .background(if (choice == selectedChoice) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
+                    .padding(1.dp)
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp)
+                        .padding(11.dp)
                 ) {
                     Text(
-                        text = choice.getString(),
+                        text = choice.getString()
                     )
                 }
             }

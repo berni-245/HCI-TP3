@@ -10,8 +10,8 @@
     <string name="delete_room">DELETE ROOM</string>
     <string name="current_room">Current room: %1$s</string>
     <string name="total_rooms">Total Rooms: %1$s</string>
-    <string name="execute_turn_on">TURN ON</string>
-    <string name="execute_turn_off">TURN OFF</string>
+    <string name="execute_turn_on">Off</string>
+    <string name="execute_turn_off">On</string>
     <string name="current_device">Current device: %1$s</string>
     <string name="total_devices">Total Devices: %1$s</string>
     <string name="device_status">Status: %1$s</string>
@@ -59,13 +59,13 @@
     <string name="turn_off_lamp_action">Turn off</string>
     <string name="vacuum_notifications_channel">Vacuum Notifications</string>
     <string name="vacuum_notification_channel_desc">Receive notifications on your device when your vacuum is running low on battery</string>
-    <string name="Room">Room</string>
+    <string name="current_location">Current location</string>
     <string name="in_base">In base</string>
     <string name="go_to_base">Go to base</string>
     <string name="battery">"Battery: "</string>
     <string name="low_battery">Low battery…</string>
     <string name="low_battery_vacuum_notification_title">Your vacuum is running low on battery</string>
-    <string name="no_room_asigned">No room asigned</string>
-    <string name="no_room_linked">No room linked to device…</string>
+    <string name="no_room_asigned">No room assigned</string>
+    <string name="no_room_linked">No base room linked to device…</string>
     <string name="current_routine">Current Routine</string>
 </resources>
