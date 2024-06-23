@@ -25,7 +25,7 @@ class NotificationEvaluator() : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
         Log.d("alarma","Recibi la alarma en NotificationEvaluator")
-        notification(context,intent)
+        //notification(context,intent)
         val deviceRemoteDataSource = DeviceRemoteDataSource(RetrofitClient.deviceService)
         GlobalScope.launch(Dispatchers.IO) {
             deviceRemoteDataSource.devices.collect { list ->
