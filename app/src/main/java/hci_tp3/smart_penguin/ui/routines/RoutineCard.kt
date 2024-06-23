@@ -61,9 +61,7 @@ fun RoutineCard(
                     textAlign = TextAlign.Center,
                 )
             }
-            RoutinePlayButton {
-
-            }
+            routine.id?.let { RoutinePlayButton (it,viewModel) }
         }
 
     }

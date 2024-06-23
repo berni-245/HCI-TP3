@@ -1,6 +1,7 @@
 package hci_tp3.smart_penguin.ui.routines
 
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -13,13 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import hci_tp3.smart_penguin.ui.getViewModelFactory
+
+
 
 @Composable
 fun RoutinePlayButton(
-    onClick: () -> Unit
+    id : String,
+    viewModel: RoutinesViewModel = viewModel(factory = getViewModelFactory()),
 ) {
+
     Button(
-        onClick = onClick,
+        onClick = {execRoutine(id,viewModel)},
         colors = ButtonColors(
             contentColor = Color.White,
             disabledContentColor = Color.LightGray ,
@@ -37,6 +44,12 @@ fun RoutinePlayButton(
     }
 }
 
+
+private fun execRoutine(id : String, viewModel: RoutinesViewModel){
+    viewModel.executeRoutine(id)
+}
+
+/*
 @Preview(showBackground = true)
 @Composable
 fun RoutinePlayButtonPreview(){
@@ -45,3 +58,4 @@ fun RoutinePlayButtonPreview(){
     }
 }
 
+*/

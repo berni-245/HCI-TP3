@@ -46,7 +46,9 @@ fun RoutinesInfo(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(text = routine?.name ?: "...", style = MaterialTheme.typography.headlineLarge)
-        RoutinePlayButton {}
+        if (routine != null) {
+            routine.id?.let { RoutinePlayButton (it,viewModel) }
+        }
         routine?.actions?.forEach { action ->
             Card(
                 modifier = Modifier
