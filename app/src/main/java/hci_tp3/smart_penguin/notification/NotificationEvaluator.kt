@@ -23,22 +23,24 @@ class NotificationEvaluator() : BroadcastReceiver() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context, intent: Intent) {
-
-        Log.d("alarma","Recibi la alarma en NotificationEvaluator")
-       // notification(context,intent)
+    if(notifictionsEnabled) {
+        Log.d("alarma", "Recibi la alarma en NotificationEvaluator")
+        // notification(context,intent)
         val deviceRemoteDataSource = DeviceRemoteDataSource(RetrofitClient.deviceService)
         GlobalScope.launch(Dispatchers.IO) {
             deviceRemoteDataSource.devices.collect { list ->
                 list.forEach { device ->
-                   if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
+                    if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
                         val vacuum = device as RemoteVacuum
 
-                        if (vacuum.state.batteryLevel <= 10 &&  vacuum.state.status != "docked" && !lowBatteryVacuum.contains(vacuum.name)
+                        if (vacuum.state.batteryLevel <= 10 && vacuum.state.status != "docked" && !lowBatteryVacuum.contains(
+                                vacuum.name
+                            )
                         ) {
                             lowBatteryVacuum.add(vacuum.name)
                             showNotificationLowBattery(vacuum, context, intent)
-                        }else{
-                            if(vacuum.state.batteryLevel > 10){
+                        } else {
+                            if (vacuum.state.batteryLevel > 10) {
                                 lowBatteryVacuum.remove(vacuum.name)
                             }
                         }
@@ -48,6 +50,7 @@ class NotificationEvaluator() : BroadcastReceiver() {
             }
 
         }
+    }
     }
 
      fun showNotificationLowBattery(
