@@ -1,14 +1,9 @@
 package hci_tp3.smart_penguin.notification
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.remote.DeviceRemoteDataSource
 import hci_tp3.smart_penguin.remote.api.RetrofitClient
@@ -23,14 +18,14 @@ class RecieveDockRequest : BroadcastReceiver() {
     override  fun onReceive(context: Context, intent: Intent) {
         val vacuumId = intent.getStringExtra("VACUUM_ID")
          val deviceRemoteDataSource  = DeviceRemoteDataSource(RetrofitClient.deviceService)
-        val notificationTitle = context.resources?.getString(R.string.dock_vacuum_from_notification_title)
+       // val notificationTitle = context.resources?.getString(R.string.dock_vacuum_from_notification_title)
 
         GlobalScope.launch(Dispatchers.IO) {
             if (vacuumId != null ) {
                 val arr = emptyArray<String>()
                 deviceRemoteDataSource.executeDeviceAction(vacuumId, Vacuum.DOCK_ACTION,arr)
 
-
+/*
                 val pendingIntent: PendingIntent =
                     PendingIntent.getActivity(context, 0, intent,
                         PendingIntent.FLAG_UPDATE_CURRENT or  PendingIntent.FLAG_IMMUTABLE)
@@ -51,7 +46,7 @@ class RecieveDockRequest : BroadcastReceiver() {
                         notificationManager.notify(vacuumId.hashCode(),builder.build())
                 }catch (e: SecurityException){
                     Log.d("notification","notifications not granted")
-                }
+                }*/
             }
         }
     }
