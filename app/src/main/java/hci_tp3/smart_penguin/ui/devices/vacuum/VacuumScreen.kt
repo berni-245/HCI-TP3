@@ -30,10 +30,10 @@ fun VacuumScreen(
     var expanded by remember { mutableStateOf(false) }
 
     uiState.currentDevice?.let { currentDevice ->
-        var isRunning by remember { mutableStateOf(currentDevice.status == VacuumStatus.ACTIVE) }
-        var isDocked by remember { mutableStateOf(currentDevice.status == VacuumStatus.DOCKED) }
-        var selectedMode by remember { mutableStateOf(currentDevice.mode) }
-        var selectedLocation by remember { mutableStateOf(currentDevice.location) }
+        var isRunning = currentDevice.status == VacuumStatus.ACTIVE
+        var isDocked = currentDevice.status == VacuumStatus.DOCKED
+        var selectedMode = currentDevice.mode
+        var selectedLocation = currentDevice.location
 
         LazyColumn(
             modifier = Modifier

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Error
 import hci_tp3.smart_penguin.model.Lamp
+import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -23,30 +24,41 @@ class LampViewModel(
     val uiState = _uiState.asStateFlow()
 
     init {
-        collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Lamp?)}
+        getCurrentDevice()
+    }
+
+    private fun getCurrentDevice() = collectOnViewModelScope(
+        repository.currentDevice
+    ) { state, response -> state.copy(currentDevice = response as Lamp?)
     }
 
     fun turnOn() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_ON_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun turnOff() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.TURN_OFF_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 //Between 1 to 100
     fun setBrightness(brightness: Int) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_BRIGHTNESS_ACTION, arrayOf(brightness)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setColor(color: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Lamp.SET_COLOR_ACTION, arrayOf(color)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,

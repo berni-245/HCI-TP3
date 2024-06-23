@@ -26,40 +26,54 @@ class VacuumViewModel (
 
     init {
         getRooms()
-        collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Vacuum?)}
+        getCurrentDevice()
     }
+
+    private fun getCurrentDevice() = collectOnViewModelScope(
+        repository.currentDevice
+    ) { state, response -> state.copy(currentDevice = response as Vacuum?)
+    }
+
+    private fun getRooms() = runOnViewModelScope(
+        { roomsRepository.getRooms(true) },
+        { state, response -> state.copy(rooms = response) }
+    )
 
     fun start() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.START_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun pause() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.PAUSE_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun dock() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.DOCK_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setMode(mode: VacuumMode) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.SET_MODE_ACTION, arrayOf(mode.apiString)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setLocation(roomId: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Vacuum.SET_LOCATION_ACTION, arrayOf(roomId)) },
         { state, _ -> state }
-    )
-
-    fun getRooms() = runOnViewModelScope(
-        { roomsRepository.getRooms(true) },
-        { state, response -> state.copy(rooms = response) }
-    )
+    ).invokeOnCompletion {
+        getRooms()
+        getCurrentDevice()
+    }
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,

@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Ac
+import hci_tp3.smart_penguin.model.Blind
 import hci_tp3.smart_penguin.model.Error
+import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -24,45 +26,62 @@ class AcViewModel (
     val uiState = _uiState.asStateFlow()
 
     init {
-        collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Ac?)}
+        getCurrentDevice()
+    }
+
+    private fun getCurrentDevice() = collectOnViewModelScope(
+        repository.currentDevice
+    ) { state, response -> state.copy(currentDevice = response as Ac?)
     }
 
     fun on() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.TURN_ON_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun off() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.TURN_OFF_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setTemperature(temperature: Int) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_TEMPERATURE_ACTION, arrayOf(temperature)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setMode(mode: AcMode) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_MODE_ACTION, arrayOf(mode.apiString)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setVerticalSwing(angle: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_VERTICAL_SWING_ACTION, arrayOf(angle)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setHorizontalSwing(angle: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_HORIZONTAL_SWING_ACTION, arrayOf(angle)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setFanSpeed(speed: String) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Ac.SET_FAN_SPEED_ACTION, arrayOf(speed)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,

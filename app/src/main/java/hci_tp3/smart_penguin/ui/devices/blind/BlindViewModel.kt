@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Blind
 import hci_tp3.smart_penguin.model.Error
+import hci_tp3.smart_penguin.model.Lamp
+import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -23,25 +25,34 @@ class BlindViewModel (
     val uiState = _uiState.asStateFlow()
 
     init {
-        collectOnViewModelScope(
-            repository.currentDevice
-        ) { state, response -> state.copy(currentDevice = response as Blind?)}
+        getCurrentDevice()
+    }
+
+    private fun getCurrentDevice() = collectOnViewModelScope(
+        repository.currentDevice
+    ) { state, response -> state.copy(currentDevice = response as Blind?)
     }
 
     fun open() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Blind.OPEN_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun close() = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Blind.CLOSE_ACTION) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     fun setLevel(level: Int) = runOnViewModelScope(
         { repository.executeDeviceAction(uiState.value.currentDevice?.id!!, Blind.SET_LEVEL_ACTION, arrayOf(level)) },
         { state, _ -> state }
-    )
+    ).invokeOnCompletion {
+        getCurrentDevice()
+    }
 
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,

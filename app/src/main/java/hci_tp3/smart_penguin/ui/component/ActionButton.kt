@@ -31,14 +31,3 @@ fun ActionButton(
             modifier = Modifier.padding(8.dp))
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ActionButtonPreview() {
-    HCITP3Theme {
-        ActionButton(
-            text = R.string.get_rooms,
-            onClick = { }
-        )
-    }
-}
