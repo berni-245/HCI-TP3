@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 Scaffold(
-                    topBar ={ AppBar() } ,
+                    topBar ={ AppBar(navController = navController) } ,
                     bottomBar = {
                         AppBottomBar(
                             currentRoute = currentRoute
