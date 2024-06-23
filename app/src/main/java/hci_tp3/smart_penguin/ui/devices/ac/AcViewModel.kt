@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import hci_tp3.smart_penguin.DataSourceException
 import hci_tp3.smart_penguin.model.Ac
-import hci_tp3.smart_penguin.model.Blind
 import hci_tp3.smart_penguin.model.Error
-import hci_tp3.smart_penguin.model.Vacuum
 import hci_tp3.smart_penguin.repository.DeviceRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow

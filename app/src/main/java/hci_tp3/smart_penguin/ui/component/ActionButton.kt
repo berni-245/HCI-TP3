@@ -8,10 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import hci_tp3.smart_penguin.R
-import hci_tp3.smart_penguin.ui.theme.HCITP3Theme
 
 @Composable
 fun ActionButton(
