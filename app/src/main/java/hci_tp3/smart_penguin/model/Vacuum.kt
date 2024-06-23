@@ -9,7 +9,8 @@ class Vacuum (
     val room: Room?,
     val status: VacuumStatus,
     val mode: VacuumMode,
-    val batteryLevel: Int
+    val batteryLevel: Int,
+    val location: Room?
 ) : Device(id, name, DeviceType.VACUUM){
 
     companion object {

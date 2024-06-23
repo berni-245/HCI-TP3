@@ -13,7 +13,8 @@ class RemoteVacuum : RemoteDevice<RemoteVacuumState>() {
             room = room?.asModel(),
             status = VacuumStatus.valueOf(state.status.uppercase()),
             mode = VacuumMode.valueOf(state.mode.uppercase()),
-            batteryLevel =  state.batteryLevel
+            batteryLevel =  state.batteryLevel,
+            location = state.location?.asModel()
         )
     }
 }
