@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.compose.ui.res.stringResource
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import hci_tp3.smart_penguin.R
@@ -33,12 +32,15 @@ class NotificationEvaluator() : BroadcastReceiver() {
                 list.forEach { device ->
                    if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
                         val vacuum = device as RemoteVacuum
-                        if (vacuum.state.batteryLevel <= 10 && !lowBatteryVacuum.contains(vacuum.id)
+
+                        if (vacuum.state.batteryLevel <= 10 &&  vacuum.state.status != "docked" && !lowBatteryVacuum.contains(vacuum.name)
                         ) {
-                            vacuum.id?.let { lowBatteryVacuum.add(it) }
+                            lowBatteryVacuum.add(vacuum.name)
                             showNotificationLowBattery(vacuum, context, intent)
                         }else{
-                            vacuum.id?.let { lowBatteryVacuum.remove(it) }
+                            if(vacuum.state.batteryLevel > 10){
+                                lowBatteryVacuum.remove(vacuum.name)
+                            }
                         }
 
                     }
@@ -61,7 +63,7 @@ class NotificationEvaluator() : BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, "vacuumChannel")
                 .setSmallIcon(R.drawable.ic_vacuum)
                 .setContentTitle(notificationTitle)
-                .setContentText(notificationTextStart + vacuum.name + notificationTextEnd)
+                .setContentText(notificationTextStart +" "+ vacuum.name + " " + notificationTextEnd)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
