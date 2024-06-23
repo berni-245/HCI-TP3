@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.state.BlindStatus
 import hci_tp3.smart_penguin.ui.getViewModelFactory
+import kotlin.math.roundToInt
 
 @Composable
 fun BlindScreen(
@@ -53,14 +54,14 @@ fun BlindScreen(
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.height(16.dp))
-            var checked by remember { mutableStateOf(uiBlindUiState.currentDevice?.status == BlindStatus.CLOSED) }
+            var checked by remember { mutableStateOf(uiBlindUiState.currentDevice?.status == BlindStatus.OPENED) }
             if (checked) {
                 Text(
-                    text = stringResource(id = R.string.open_blinds_action)
+                    text = stringResource(id = R.string.close_blind_action)
                 )
             } else {
                 Text(
-                    text = stringResource(id = R.string.close_blind_action)
+                    text = stringResource(id = R.string.open_blinds_action)
                 )
             }
             Spacer(modifier = Modifier.height(6.dp))
@@ -84,11 +85,13 @@ fun BlindScreen(
             Slider(
                 value = sliderPosition.toFloat(),
                 onValueChange = {
-                    sliderPosition = it.toInt()
+                    sliderPosition = it.roundToInt()
                     blindViewModel.setLevel(sliderPosition)
                 },
-                valueRange = 1f..100f
+                valueRange = 1f..100f,
+                enabled = checked
             )
+            Text(text = "$sliderPosition%")
         }
     }
 }

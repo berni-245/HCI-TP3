@@ -92,7 +92,8 @@ fun AcScreen(
             value = sliderPosition.toFloat(),
             onValueChange = { sliderPosition = it.roundToInt(); acViewModel.setTemperature(sliderPosition) },
             steps = 19,
-            valueRange = 18f..38f
+            valueRange = 18f..38f,
+            enabled = checked
         )
         Text(text = "$sliderPosition°C")
         Spacer(modifier = Modifier.height(16.dp))
@@ -107,7 +108,8 @@ fun AcScreen(
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     onClick = { selectedIndex = index; acViewModel.setMode(AcMode.entries[index]) },
-                    selected = index == selectedIndex
+                    selected = index == selectedIndex,
+                    enabled = checked
                 ) {
                     Text(label)
                 }
@@ -127,13 +129,14 @@ fun AcScreen(
 
         ExposedDropdownMenuBox(
             expanded = expanded1,
-            onExpandedChange = { expanded1 = it } // Toggle expanded state when clicked
+            onExpandedChange = { if(checked){ expanded1 = it } }, // Toggle expanded state when clicked
         ) {
             // The text field that shows the currently selected option
             TextField(
                 value = selectedOption1,
                 onValueChange = {}, // Read-only, so no value change action needed
                 readOnly = true, // Prevents user input directly
+                enabled = checked,
                 trailingIcon = { // Icon indicating dropdown functionality
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded1)
                 },
@@ -141,7 +144,7 @@ fun AcScreen(
                     .fillMaxWidth()
                     .menuAnchor() // Ensures proper anchoring of the dropdown menu
             )
-
+            if(checked){
             // Dropdown menu that shows the list of options
             ExposedDropdownMenu(
                 expanded = expanded1,
@@ -158,7 +161,7 @@ fun AcScreen(
                         }
                     )
                 }
-            }
+            }}
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -174,13 +177,14 @@ fun AcScreen(
 
         ExposedDropdownMenuBox(
             expanded = expanded2,
-            onExpandedChange = { expanded2 = it } // Toggle expanded state when clicked
+            onExpandedChange = { if(checked) { expanded2 = it } } // Toggle expanded state when clicked
         ) {
             // The text field that shows the currently selected option
             TextField(
                 value = selectedOption2,
                 onValueChange = {}, // Read-only, so no value change action needed
                 readOnly = true, // Prevents user input directly
+                enabled = checked,
                 trailingIcon = { // Icon indicating dropdown functionality
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded2)
                 },
@@ -188,7 +192,7 @@ fun AcScreen(
                     .fillMaxWidth()
                     .menuAnchor() // Ensures proper anchoring of the dropdown menu
             )
-
+            if(checked){
             // Dropdown menu that shows the list of options
             ExposedDropdownMenu(
                 expanded = expanded2,
@@ -205,7 +209,7 @@ fun AcScreen(
                         }
                     )
                 }
-            }
+            }}
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
@@ -221,13 +225,14 @@ fun AcScreen(
 
         ExposedDropdownMenuBox(
             expanded = expanded3,
-            onExpandedChange = { expanded3 = it } // Toggle expanded state when clicked
+            onExpandedChange = { if(checked) { expanded3 = it } } // Toggle expanded state when clicked
         ) {
             // The text field that shows the currently selected option
             TextField(
                 value = selectedOption3,
                 onValueChange = {}, // Read-only, so no value change action needed
                 readOnly = true, // Prevents user input directly
+                enabled = checked,
                 trailingIcon = { // Icon indicating dropdown functionality
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded3)
                 },
@@ -235,7 +240,7 @@ fun AcScreen(
                     .fillMaxWidth()
                     .menuAnchor() // Ensures proper anchoring of the dropdown menu
             )
-
+            if(checked){
             // Dropdown menu that shows the list of options
             ExposedDropdownMenu(
                 expanded = expanded3,
@@ -252,7 +257,7 @@ fun AcScreen(
                         }
                     )
                 }
-            }
+            }}
         }
     }
     }

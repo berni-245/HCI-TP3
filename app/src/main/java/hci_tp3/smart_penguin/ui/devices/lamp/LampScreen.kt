@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,6 +29,7 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.model.state.Status
 import hci_tp3.smart_penguin.ui.getViewModelFactory
+import kotlin.math.roundToInt
 
 @Composable
 fun LampScreen(
@@ -77,22 +79,24 @@ fun LampScreen(
                         else -> {}
                     }
                     checked = !checked
-                }
+                },
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = stringResource(id = R.string.lamp_intensity)
             )
-            var sliderPosition by remember { mutableFloatStateOf(uiLampUiState.currentDevice!!.brightness.toFloat()) }
+            var sliderPosition by remember { mutableIntStateOf(uiLampUiState.currentDevice!!.brightness) }
             Spacer(modifier = Modifier.height(6.dp))
             Slider(
-                value = sliderPosition,
+                value = sliderPosition.toFloat(),
                 onValueChange = {
-                    sliderPosition = it
-                    lampViewModel.setBrightness(sliderPosition.toInt())
+                    sliderPosition = it.roundToInt()
+                    lampViewModel.setBrightness(sliderPosition)
                 },
-                valueRange = 1f..100f
+                valueRange = 1f..100f,
+                enabled = checked
             )
+            Text(text = "$sliderPosition%")
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = stringResource(id = R.string.lamp_color)
@@ -100,6 +104,7 @@ fun LampScreen(
             Spacer(modifier = Modifier.height(6.dp))
             val controller = rememberColorPickerController()
             controller.setDebounceDuration(500L)
+            controller.setEnabled(checked)
             HsvColorPicker(modifier = Modifier
                 .fillMaxWidth()
                 .height(450.dp),
