@@ -7,8 +7,4 @@ data class RoutinesUiState(
     val loading: Boolean = false,
     val error: Error? = null,
     val routines: List<Routine> = emptyList(),
-//    val currentRoutine: Routine? = null
 )
-
-//val RoutinesUiState.canGetCurrent: Boolean get() = currentRoutine != null
-//val RoutinesUiState.canExecuteCurrent: Boolean get() = canGetCurrent
