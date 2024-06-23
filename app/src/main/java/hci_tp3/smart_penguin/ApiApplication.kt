@@ -42,13 +42,6 @@ class ApiApplication  : Application() {
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        var builder = NotificationCompat.Builder(this, VACUUM_CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_vacuum)
-            .setContentTitle("Prueba")
-            .setContentText("notificacion de prueba")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
     }
 
@@ -67,6 +60,9 @@ class ApiApplication  : Application() {
         if(pendingIntent != null)
             alarmManager.cancel(pendingIntent)
 
+        pendingIntent = PendingIntent.getBroadcast(
+            this, 0, intent, PendingIntent.FLAG_IMMUTABLE
+        )
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             SystemClock.currentThreadTimeMillis(),

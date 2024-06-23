@@ -68,4 +68,6 @@
     <string name="no_room_asigned">No room assigned</string>
     <string name="no_room_linked">No base room linked to device…</string>
     <string name="current_routine">Current Routine</string>
+    <string name="low_battery_vacuum_notification_text_start">Your vacuum</string>
+    <string name="low_battery_vacuum_notification_text_end">is running out of battery. Would like to send it to the dock?</string>
 </resources>

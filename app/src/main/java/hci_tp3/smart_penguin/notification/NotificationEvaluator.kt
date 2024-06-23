@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import hci_tp3.smart_penguin.R
 import hci_tp3.smart_penguin.remote.DeviceRemoteDataSource
 import hci_tp3.smart_penguin.remote.api.RetrofitClient
+import hci_tp3.smart_penguin.remote.model.RemoteDevice
 import hci_tp3.smart_penguin.remote.model.RemoteDeviceType
 import hci_tp3.smart_penguin.remote.model.RemoteVacuum
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -26,50 +27,59 @@ class NotificationEvaluator() : BroadcastReceiver() {
 
         Log.d("alarma","Recibi la alarma en NotificationEvaluator")
         notification(context,intent)
-       /* GlobalScope.launch(Dispatchers.IO) {
-            val deviceRemoteDataSource = DeviceRemoteDataSource(RetrofitClient.deviceService)
-            val lowBatteryVacuum: ArrayList<String>? =
-                intent?.getStringArrayListExtra("low_battery_vacuum")
-            // val chargedVacuum: ArrayList<String>? = intent?.getStringArrayListExtra("charged_battery_vacuum")
-            launch {
-                deviceRemoteDataSource.devices.collect { list ->
-                    list.forEach { device ->
-                        if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
-                            val vacuum = device as RemoteVacuum
-                            if (vacuum.state.batteryLevel <= 10 && !lowBatteryVacuum?.contains(vacuum.id)!!
-                            ) {
-                                vacuum.id?.let { lowBatteryVacuum.add(it) }
-                                showNotificationLowBattery(vacuum, context, intent)
-                            }else{
-                                if (lowBatteryVacuum != null) {
-                                    vacuum.id?.let { lowBatteryVacuum.remove(it) }
-                                }
-                            }
+        val deviceRemoteDataSource = DeviceRemoteDataSource(RetrofitClient.deviceService)
+        val lowBatteryVacuum: ArrayList<String>? =
+            intent.getStringArrayListExtra("low_battery_vacuum")
+        // val chargedVacuum: ArrayList<String>? = intent?.getStringArrayListExtra("charged_battery_vacuum")
 
-                        }
+        GlobalScope.launch(Dispatchers.IO) {
+            deviceRemoteDataSource.devices.collect { list ->
+                list.forEach { device ->
+                   /* if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
+                        val vacuum = device as RemoteVacuum
+                        if (vacuum.state.batteryLevel <= 10 && !lowBatteryVacuum?.contains(vacuum.id)!!
+                        ) {
+                            vacuum.id?.let { lowBatteryVacuum.add(it) }
+                            showNotificationLowBattery(vacuum, context, intent)
+                        }else{
+                            if (lowBatteryVacuum != null) {
+                                vacuum.id?.let { lowBatteryVacuum.remove(it) }
+                            }
+                        }*/
+                    showNotificationLowBattery(device, context, intent)
                     }
                 }
             }
 
-        }*/
+        }
     }
 
-    private fun showNotificationLowBattery(
-        vacuum: RemoteVacuum,
-        context: Context?,
+     fun showNotificationLowBattery(
+        vacuum: RemoteDevice<*>,
+        context: Context,
         intent: Intent?
     ) {
-
-        var builder = context?.let {
-            val pendingIntent: PendingIntent =
-                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-            NotificationCompat.Builder(it, "vacuumChannel")
+        val notificationTitle = context.resources?.getString(R.string.low_battery_vacuum_notification_title)
+        val notificationTextStart = context.resources?.getString(R.string.low_battery_vacuum_notification_text_start)
+        val notificationTextEnd = context.resources?.getString(R.string.low_battery_vacuum_notification_text_end)
+        val pendingIntent: PendingIntent =
+            PendingIntent.getActivity(context, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT or  PendingIntent.FLAG_IMMUTABLE)
+        val builder = NotificationCompat.Builder(context, "vacuumChannel")
                 .setSmallIcon(R.drawable.ic_vacuum)
-                .setContentTitle("Low Battery")
-                .setContentText("aaaaaa robocop se queda sin bateriaaaa ayudaa")
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationTextStart + vacuum.name + notificationTextEnd)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+
+
+
+        try {
+            val notificationManager = NotificationManagerCompat.from(context)
+            if(notificationManager.areNotificationsEnabled())
+                notificationManager.notify(vacuum.id.hashCode(),builder.build())
+        }catch (e: SecurityException){
+            Log.d("notification","notifications not granted")
         }
     }
 
@@ -81,7 +91,7 @@ class NotificationEvaluator() : BroadcastReceiver() {
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val builder =  NotificationCompat.Builder(context, "vacuumChannel")
-                .setSmallIcon(R.drawable.ic_vacuum)
+                .setSmallIcon(R.drawable.ic_lamp)
                 .setContentTitle("Low Battery")
                 .setContentText("robocop se queda sin pilas")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -97,6 +107,3 @@ class NotificationEvaluator() : BroadcastReceiver() {
             Log.d("notification","notifications not granted")
         }
     }
-
-
-}
