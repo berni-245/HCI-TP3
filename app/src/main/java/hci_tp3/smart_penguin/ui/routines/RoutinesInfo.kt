@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,30 +42,33 @@ fun RoutinesInfo(
 ) {
 //    val routineState by viewModel.uiState.collectAsState()
 //    val routine = routineState.currentRoutine
-    val routine = viewModel.getCurrentRoutine()
 
-    Column(
+    val routine = viewModel.getCurrentRoutine()
+    LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = routine?.name ?: "...", style = MaterialTheme.typography.headlineLarge)
-        if (routine != null) {
-            routine.id?.let { RoutinePlayButton (it,viewModel) }
-        }
-        routine?.actions?.forEach { action ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(130.dp)
-                    .padding(start = 8.dp, end = 16.dp, top = 10.dp, bottom = 8.dp)
-            ) {
-                HandleDeviceType(action = action)
+        item{
+            Text(text = routine?.name ?: "...", style = MaterialTheme.typography.headlineLarge)
+            if (routine != null) {
+                routine.id?.let { RoutinePlayButton (it,viewModel) }
             }
+            routine?.actions?.forEach { action ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(130.dp)
+                        .padding(start = 8.dp, end = 16.dp, top = 10.dp, bottom = 8.dp)
+                ) {
+                    HandleDeviceType(action = action)
+                }
 
+            }
         }
-         Spacer(modifier =Modifier.height(10.dp))
     }
+
+
 }
 
 @Composable
