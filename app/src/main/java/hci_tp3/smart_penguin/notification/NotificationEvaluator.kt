@@ -28,25 +28,19 @@ class NotificationEvaluator() : BroadcastReceiver() {
         Log.d("alarma","Recibi la alarma en NotificationEvaluator")
         notification(context,intent)
         val deviceRemoteDataSource = DeviceRemoteDataSource(RetrofitClient.deviceService)
-        val lowBatteryVacuum: ArrayList<String>? =
-            intent.getStringArrayListExtra("low_battery_vacuum")
-        // val chargedVacuum: ArrayList<String>? = intent?.getStringArrayListExtra("charged_battery_vacuum")
-
         GlobalScope.launch(Dispatchers.IO) {
             deviceRemoteDataSource.devices.collect { list ->
                 list.forEach { device ->
-                   /* if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
+                   if (device.type.id == RemoteDeviceType.VACUUM_DEVICE_TYPE_ID) {
                         val vacuum = device as RemoteVacuum
-                        if (vacuum.state.batteryLevel <= 10 && !lowBatteryVacuum?.contains(vacuum.id)!!
+                        if (vacuum.state.batteryLevel <= 10 && !lowBatteryVacuum.contains(vacuum.id)
                         ) {
                             vacuum.id?.let { lowBatteryVacuum.add(it) }
                             showNotificationLowBattery(vacuum, context, intent)
                         }else{
-                            if (lowBatteryVacuum != null) {
-                                vacuum.id?.let { lowBatteryVacuum.remove(it) }
-                            }
-                        }*/
-                    showNotificationLowBattery(device, context, intent)
+                            vacuum.id?.let { lowBatteryVacuum.remove(it) }
+                        }
+
                     }
                 }
             }
@@ -106,4 +100,4 @@ class NotificationEvaluator() : BroadcastReceiver() {
         }catch (e: SecurityException){
             Log.d("notification","notifications not granted")
         }
-    }
+    }}
