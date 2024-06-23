@@ -39,11 +39,10 @@ fun LampScreen(
 ) {
     val uiLampUiState by lampViewModel.uiState.collectAsState()
 
-    LazyColumn(
+    Column(
         modifier = Modifier
             .padding(16.dp),
-    ) {
-        item {
+    )  {
             if (uiLampUiState.currentDevice == null) {
                 // Mostrar un indicador de carga mientras los datos se están obteniendo
                 Box(
@@ -132,5 +131,5 @@ fun LampScreen(
                 }
             }
         }
-    }
+
 }
