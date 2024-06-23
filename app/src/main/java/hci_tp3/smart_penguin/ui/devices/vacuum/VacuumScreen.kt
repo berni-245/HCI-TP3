@@ -126,6 +126,7 @@ fun VacuumScreen(
                     onClick = {
                         isRunning = false
                         isDocked = !isDocked
+                        selectedLocation = currentDevice.room
                         viewModel.dock()
                               },
                     modifier = Modifier,
