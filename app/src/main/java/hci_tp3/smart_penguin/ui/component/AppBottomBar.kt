@@ -1,12 +1,14 @@
 package hci_tp3.smart_penguin.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import hci_tp3.smart_penguin.ui.navigation.AppDestinations
 
 @Composable
@@ -19,7 +21,7 @@ fun AppBottomBar(
         AppDestinations.ROUTINES
     )
 
-    NavigationBar {
+    NavigationBar (modifier = Modifier.background(color = lightColorScheme().primaryContainer)){
         items.forEach { item ->
             NavigationBarItem(
                 icon = { Icon(imageVector = item.icon, contentDescription = stringResource(item.title)) },
@@ -29,13 +31,5 @@ fun AppBottomBar(
                 onClick = { onNavigateToRoute(item.route) }
             )
         }
-    }
-}
-
-@Preview( showBackground = true)
-@Composable
-fun Prev(){
-    AppBottomBar(currentRoute = "routines") {
-        
     }
 }

@@ -83,7 +83,7 @@ fun DevicesScreenTablet(
         Box(
             modifier = Modifier
                 .width((300 * sizeMultiplier).dp)
-                .background(colorScheme.onBackground)
+                .background(colorScheme.secondaryContainer)
                 .fillMaxHeight(),
             contentAlignment = Alignment.Center
         ) {

@@ -20,7 +20,8 @@ private val LightColorScheme = lightColorScheme(
     secondary = secondaryColor,
     tertiary = tertiaryColor,
     error = errorColor,
-    primaryContainer = primaryBackground
+    primaryContainer = primaryBackground,
+    secondaryContainer = tabListColor
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
