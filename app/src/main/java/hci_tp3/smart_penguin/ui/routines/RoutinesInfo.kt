@@ -260,8 +260,8 @@ fun VacuumHandler(action: Action) {
 
             Vacuum.SET_LOCATION_ACTION -> {
                 Text(stringResource(R.string.set_dock_room_vacuum_action))
-                Text(text = " : ")
-                Text(text = action.params.first())
+                /*Text(text = " : ")
+                Text(text = action.params.first())*/
             }
         }
     }
