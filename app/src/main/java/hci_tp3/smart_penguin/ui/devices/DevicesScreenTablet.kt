@@ -265,35 +265,27 @@ class LampCard : DeviceCard<Lamp> {
                 shape = RoundedCornerShape(8.dp),
             )
             .background(colorScheme.primaryContainer)
-        val lampColor = hexToColor(device.color)
-        val colors: List<Color>
         if (device.status == Status.ON) {
-            colors = listOf(
-                lampColor,
-                lampColor.copy(alpha = 0.7f),
-                lampColor.copy(alpha = 0.5f),
-                lampColor.copy(alpha = 0.3f),
-                lampColor.copy(alpha = 0.1f),
-                Color.Transparent
-            )
-        } else {
-            colors = listOf(
-                lampColor.copy(alpha = 0.4f),
-                lampColor.copy(alpha = 0.2f),
-                lampColor.copy(alpha = 0.1f),
-                Color.Transparent
+            val lampColor = hexToColor(device.color)
+            val alpha = device.brightness / 100F
+            modifier = modifier.then(
+                Modifier
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                lampColor.copy(alpha = alpha),
+                                lampColor.copy(alpha = 0.7f * alpha),
+                                lampColor.copy(alpha = 0.5f * alpha),
+                                lampColor.copy(alpha = 0.3f * alpha),
+                                lampColor.copy(alpha = 0.1f * alpha),
+                                Color.Transparent
+                            ),
+                            center = Offset(Float.POSITIVE_INFINITY, 0f),
+                            radius = 800f * sizeMultiplier
+                        )
+                    )
             )
         }
-        modifier = modifier.then(
-            Modifier
-                .background(
-                    brush = Brush.radialGradient(
-                        colors = colors,
-                        center = Offset(Float.POSITIVE_INFINITY, 0f),
-                        radius = 800f*sizeMultiplier
-                    )
-                )
-        )
         DeviceItem(
             device = device,
             sizeMultiplier = sizeMultiplier,
@@ -459,7 +451,8 @@ class VacuumCard : DeviceCard<Vacuum> {
                     onNavigateDestination(AppDestinations.VACUUM.route)
                 },
             deviceInfo = {
-                val mode = if (device.status == VacuumStatus.ACTIVE) ", " + device.mode.getString() else ""
+                val mode =
+                    if (device.status == VacuumStatus.ACTIVE) ", " + device.mode.getString() else ""
                 Column {
                     Text(text = device.status.getString() + mode)
                     Text(device.location?.name ?: stringResource(R.string.no_room_asigned))
