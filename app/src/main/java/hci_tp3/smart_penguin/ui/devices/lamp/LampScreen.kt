@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,10 +40,11 @@ fun LampScreen(
 ) {
     val uiLampUiState by lampViewModel.uiState.collectAsState()
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .padding(16.dp),
-    )  {
+    ) {
+        item {
             if (uiLampUiState.currentDevice == null) {
                 // Mostrar un indicador de carga mientras los datos se están obteniendo
                 Box(
@@ -116,7 +119,8 @@ fun LampScreen(
                     controller.setEnabled(checked)
                     HsvColorPicker(modifier = Modifier
                         .fillMaxWidth()
-                        .height(450.dp),
+                        .height(450.dp)
+                        .padding(end = LocalConfiguration.current.screenWidthDp.dp / 10,start = LocalConfiguration.current.screenWidthDp.dp / 10),
                         initialColor = hexToColor(uiLampUiState.currentDevice?.color ?: ""),
                         controller = controller,
                         onColorChanged = { colorEnvelope: ColorEnvelope ->
@@ -130,5 +134,4 @@ fun LampScreen(
                 }
             }
         }
-
-}
+}}
