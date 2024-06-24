@@ -69,6 +69,7 @@ fun BlindScreen(
                     Spacer(modifier = Modifier.height(6.dp))
                     Switch(
                         checked = checked,
+                        enabled = !uiBlindUiState.isTransitioning,
                         onCheckedChange = {
                             when (uiBlindUiState.currentDevice?.status) {
                                 BlindStatus.CLOSED -> blindViewModel.open()
@@ -91,9 +92,17 @@ fun BlindScreen(
                             blindViewModel.setLevel(sliderPosition)
                         },
                         valueRange = 1f..100f,
-                        enabled = checked
+                        enabled = checked&&!uiBlindUiState.isTransitioning
                     )
                     Text(text = "$sliderPosition%")
+                    Spacer(modifier = Modifier.height(6.dp))
+                    if(uiBlindUiState.isTransitioning) {
+                        if(uiBlindUiState.currentDevice?.status == BlindStatus.OPENING)
+                            Text(text = (stringResource(id = R.string.blind_status_opening)))
+                        else
+                            Text(text = (stringResource(id = R.string.blind_status_closing)))
+                        Text(text = "${uiBlindUiState.currentDevice?.currentLevel}")
+                    }
                 }
             }
         }
